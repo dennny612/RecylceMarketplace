@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RECYCLE MarketPlace — Beranda</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green-dark:#1a3d2b; --green-mid:#2d6a4f; --green-light:#52b788;
+      --green-pale:#b7e4c7; --cream:#f4f1e8; --amber:#e9c46a;
+      --white:#ffffff; --text-dark:#1c1c1e; --text-muted:#6b7280;
+    }
+    *{box-sizing:border-box;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);scroll-behavior:smooth;}
+    h1,h2,h3,h4{font-family:'Playfair Display',serif;}
+
+    /* NAVBAR */
+    .navbar-custom{background:var(--green-dark);padding:.9rem 0;position:sticky;top:0;z-index:1050;box-shadow:0 2px 20px rgba(0,0,0,.2);}
+    .navbar-brand-text{font-family:'Playfair Display',Roboto;font-size:1.6rem;font-weight:900;color:var(--green-pale)!important;letter-spacing:-.5px;text-decoration:none;}
+    .navbar-brand-text span{color:var(--amber);}
+    .nav-link-custom{color:rgba(255,255,255,.82)!important;font-weight:500;font-size:.88rem;padding:.4rem .9rem!important;border-radius:6px;transition:all .2s;text-decoration:none;}
+    .nav-link-custom:hover,.nav-link-custom.active{color:var(--amber)!important;background:rgba(255,255,255,.07);}
+    .btn-nav-login{background:var(--green-light);color:var(--white)!important;border-radius:50px;padding:.38rem 1.1rem!important;font-weight:600;font-size:.85rem;transition:all .2s;}
+    .btn-nav-login:hover{background:var(--amber);color:var(--green-dark)!important;}
+
+    /* HERO */
+    .hero-section{background:linear-gradient(135deg,var(--green-dark) 0%,var(--green-mid) 60%,var(--green-light) 100%);min-height:92vh;display:flex;align-items:center;position:relative;overflow:hidden;}
+    .hero-section::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");}
+    .hero-badge{display:inline-block;background:rgba(233,196,106,.2);border:1px solid var(--amber);color:var(--amber);font-size:.78rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:.35rem 1rem;border-radius:50px;margin-bottom:1.2rem;}
+    .hero-title{font-size:clamp(2.6rem,6vw,4.5rem);color:var(--white);line-height:1.1;margin-bottom:1.4rem;}
+    .hero-title .highlight{color:var(--amber);}
+    .hero-desc{color:rgba(255,255,255,.78);font-size:1.05rem;line-height:1.7;max-width:520px;margin-bottom:2rem;}
+    .btn-hero-primary{background:var(--amber);color:var(--green-dark);font-weight:700;padding:.85rem 2rem;border-radius:50px;font-size:.95rem;border:none;transition:all .25s;box-shadow:0 4px 20px rgba(233,196,106,.4);cursor:pointer;}
+    .btn-hero-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(233,196,106,.5);background:#f4d06f;}
+    .btn-hero-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.5);font-weight:600;padding:.85rem 2rem;border-radius:50px;font-size:.95rem;transition:all .25s;cursor:pointer;}
+    .btn-hero-outline:hover{border-color:var(--white);background:rgba(255,255,255,.1);color:var(--white);}
+    .hero-stats{display:flex;gap:2.5rem;margin-top:2.5rem;}
+    .hero-stat-num{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--amber);line-height:1;}
+    .hero-stat-label{font-size:.75rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px;}
+    .hero-card-float{background:rgba(255,255,255,.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:1.5rem;margin-bottom:1rem;animation:float 4s ease-in-out infinite;}
+    .hero-card-float:nth-child(2){animation-delay:-2s;}
+    .hero-card-float:nth-child(3){animation-delay:-1s;}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+
+    /* SECTION */
+    .section-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--green-mid);margin-bottom:.5rem;display:block;}
+    .section-title{font-size:clamp(1.9rem,4vw,2.8rem);color:var(--green-dark);margin-bottom:.8rem;line-height:1.2;}
+    .section-divider{width:50px;height:4px;background:var(--green-light);border-radius:10px;margin:0 auto 1.5rem;}
+    .section-pad{padding:80px 0;}
+
+    /* CATEGORIES */
+    .cat-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--white);border:2px solid var(--green-pale);color:var(--green-dark);border-radius:50px;padding:.5rem 1.2rem;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;}
+    .cat-chip:hover,.cat-chip.active{background:var(--green-dark);border-color:var(--green-dark);color:var(--white);}
+
+    /* PRODUCT CARDS */
+    .product-card{background:var(--white);border-radius:16px;overflow:hidden;border:none;box-shadow:0 2px 16px rgba(0,0,0,.07);transition:all .3s;height:100%;}
+    .product-card:hover{transform:translateY(-5px);box-shadow:0 12px 40px rgba(0,0,0,.13);}
+    .product-img-wrap{position:relative;height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .product-img-icon{font-size:5rem;opacity:.5;}
+    .badge-eco{position:absolute;top:10px;left:10px;background:var(--green-mid);color:#fff;font-size:.7rem;font-weight:600;padding:.25rem .6rem;border-radius:50px;}
+    .badge-new{position:absolute;top:10px;right:10px;background:var(--amber);color:var(--green-dark);font-size:.7rem;font-weight:700;padding:.25rem .6rem;border-radius:50px;}
+    .product-body{padding:1.2rem;}
+    .product-category{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-light);font-weight:700;margin-bottom:.3rem;}
+    .product-title{font-size:.95rem;font-weight:600;margin-bottom:.5rem;}
+    .product-price{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--green-dark);}
+    .btn-add-cart{background:var(--green-dark);color:var(--white);border:none;border-radius:50px;padding:.45rem 1.2rem;font-size:.82rem;font-weight:600;transition:all .2s;cursor:pointer;}
+    .btn-add-cart:hover{background:var(--green-light);}
+
+    /* NEWS */
+    .news-card{background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07);transition:all .3s;height:100%;}
+    .news-card:hover{transform:translateY(-4px);box-shadow:0 10px 36px rgba(0,0,0,.12);}
+    .news-img{height:190px;display:flex;align-items:center;justify-content:center;font-size:4rem;}
+    .news-tag{font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-light);margin-bottom:.3rem;}
+    .news-title{font-size:1rem;font-weight:600;line-height:1.4;margin-bottom:.5rem;}
+    .news-meta{font-size:.78rem;color:var(--text-muted);}
+
+    /* FOOTER */
+    .footer{background:var(--green-dark);color:rgba(255,255,255,.75);padding:60px 0 30px;}
+    .footer-brand{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--green-pale);}
+    .footer-brand span{color:var(--amber);}
+    .footer-heading{color:var(--white);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1.2rem;}
+    .footer-link{color:rgba(255,255,255,.65);font-size:.88rem;text-decoration:none;display:block;margin-bottom:.5rem;transition:color .2s;}
+    .footer-link:hover{color:var(--amber);}
+    .footer-divider{border-color:rgba(255,255,255,.12);margin:2rem 0 1.5rem;}
+    .social-btn{width:38px;height:38px;border-radius:8px;background:rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center;color:var(--white);font-size:1.1rem;transition:all .2s;cursor:pointer;text-decoration:none;}
+    .social-btn:hover{background:var(--green-light);transform:translateY(-2px);color:white;}
+
+    @media(max-width:768px){.hero-stats{gap:1.5rem;flex-wrap:wrap;}}
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar-custom">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between w-100">
+      <a class="navbar-brand-text" href="index.html">Recycle Marketplace</a>
+      <div class="d-none d-lg-flex align-items-center gap-1">
+        <a class="nav-link-custom active" href="index.html">Beranda</a>
+        <a class="nav-link-custom" href="about.html">Tentang Kami</a>
+        <a class="nav-link-custom" href="katalog.html">Katalog</a>
+        <a class="nav-link-custom" href="berita.html">Berita</a>
+        <a class="nav-link-custom" href="kontak.html">Kontak</a>
+        <div class="ms-2"><a class="nav-link-custom btn-nav-login" href="login.html"><i class="bi bi-person me-1"></i>Masuk</a></div>
+      </div>
+      <button class="d-lg-none btn btn-sm" style="color:var(--green-pale);border-color:rgba(255,255,255,.3)" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+        <i class="bi bi-list fs-5"></i>
+      </button>
+    </div>
+    <div class="collapse d-lg-none" id="mobileMenu">
+      <div class="pt-3 pb-2 d-flex flex-column gap-1">
+        <a class="nav-link-custom active" href="index.html">Beranda</a>
+        <a class="nav-link-custom" href="about.html">Tentang Kami</a>
+        <a class="nav-link-custom" href="katalog.html">Katalog</a>
+        <a class="nav-link-custom" href="berita.html">Berita</a>
+        <a class="nav-link-custom" href="kontak.html">Kontak</a>
+        <a class="nav-link-custom btn-nav-login mt-1 text-center" href="login.html">Masuk</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="container py-5 position-relative">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <div class="hero-badge"><i class="bi bi-recycle me-1"></i> Platform Jual Beli Produk Daur Ulang </div>
+        <h1 class="hero-title">Jual dan Beli Barang <span class="highlight">Daur Ulang</span> Berkualitas</h1>
+        <p class="hero-desc">Ubah sampah jadi cuan. Recycle MarketPlace adalah platform jual beli barang daur ulang yang menghubungkan penjual kreatif dengan pembeli peduli lingkungan Bersama Recycle MarketPlace, setiap transaksi menjadi langkah nyata menuju masa depan yang berkelanjutan.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="katalog.html"><button class="btn-hero-primary"><i class="bi bi-bag me-2"></i>Jelajahi Katalog</button></a>
+          <a href="about.html"><button class="btn-hero-outline">Pelajari Lebih Lanjut <i class="bi bi-arrow-right ms-1"></i></button></a>
+        </div>
+        <div class="hero-stats">
+          <div><div class="hero-stat-num">200+</div><div class="hero-stat-label">Produk Aktif</div></div>
+          <div><div class="hero-stat-num">20</div><div class="hero-stat-label">Penjual Verified</div></div>
+          <div><div class="hero-stat-num">5%</div><div class="hero-stat-label">Kepuasan Pembeli</div></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="hero-card-float">
+          <div class="d-flex align-items-center gap-3">
+            <div style="font-size:2.5rem">♻️</div>
+            <div>
+              <div style="color:var(--white);font-weight:700;font-size:1rem">Meja Kayu Daur Ulang</div>
+              <div style="color:var(--amber);font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700">Rp 450.000</div>
+              <div style="color:rgba(255,255,255,.6);font-size:.78rem">⭐ 4.9 · 128 terjual</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card-float">
+          <div class="d-flex align-items-center gap-3">
+            <div style="font-size:2.5rem">👜</div>
+            <div>
+              <div style="color:var(--white);font-weight:700;font-size:1rem">Tas Kanvas Upcycled</div>
+              <div style="color:var(--amber);font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700">Rp 85.000</div>
+              <div style="color:rgba(255,255,255,.6);font-size:.78rem">⭐ 4.7 · 342 terjual</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card-float">
+          <div class="d-flex align-items-center gap-3">
+            <div style="font-size:2.5rem">🌱</div>
+            <div>
+              <div style="color:var(--white);font-weight:700;font-size:1rem">Pot Tanaman Botol Bekas</div>
+              <div style="color:var(--amber);font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700">Rp 35.000</div>
+              <div style="color:rgba(255,255,255,.6);font-size:.78rem">⭐ 4.8 · 890 terjual</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KATEGORI -->
+<section class="section-pad" style="background:var(--white)">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-eyebrow">Jelajahi Berdasarkan</span>
+      <h2 class="section-title">Kategori Produk</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <div class="cat-chip active"><span>🪑</span> Furnitur</div>
+      <div class="cat-chip"><span>👗</span> Pakaian</div>
+      <div class="cat-chip"><span>🎨</span> Dekorasi</div>
+      <div class="cat-chip"><span>📦</span> Wadah & Kotak</div>
+      <div class="cat-chip"><span>🌿</span> Taman</div>
+      <div class="cat-chip"><span>🔧</span> Peralatan</div>
+      <div class="cat-chip"><span>📚</span> Buku & Stationary</div>
+      <div class="cat-chip"><span>🧸</span> Mainan</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUK UNGGULAN -->
+<section class="section-pad" style="background:var(--cream)">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-eyebrow">Pilihan Terbaik</span>
+      <h2 class="section-title">Produk Unggulan</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-3">
+        <div class="product-card">
+          <div class="product-img-wrap" style="background:#e8f5e9"><span class="product-img-icon">🪑</span><span class="badge-eco">Eco</span><span class="badge-new">Terlaris</span></div>
+          <div class="product-body"><div class="product-category">Furnitur</div><div class="product-title">Kursi Kayu Palet Daur Ulang</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★★</span><span style="font-size:.75rem;color:var(--text-muted)">(128)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 320.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="product-card">
+          <div class="product-img-wrap" style="background:#fff8e1"><span class="product-img-icon">👜</span><span class="badge-eco">Eco</span></div>
+          <div class="product-body"><div class="product-category">Aksesoris</div><div class="product-title">Tas Jinjing dari Kain Perca</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★☆</span><span style="font-size:.75rem;color:var(--text-muted)">(87)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 75.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="product-card">
+          <div class="product-img-wrap" style="background:#e3f2fd"><span class="product-img-icon">🕯️</span><span class="badge-eco">Eco</span><span class="badge-new">Baru</span></div>
+          <div class="product-body"><div class="product-category">Dekorasi</div><div class="product-title">Lilin Aromaterapi dari Soy Wax</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★★</span><span style="font-size:.75rem;color:var(--text-muted)">(215)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 55.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="product-card">
+          <div class="product-img-wrap" style="background:#f3e5f5"><span class="product-img-icon">🌿</span><span class="badge-eco">Eco</span></div>
+          <div class="product-body"><div class="product-category">Taman</div><div class="product-title">Set Pot Tanaman Botol Kaca</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★☆</span><span style="font-size:.75rem;color:var(--text-muted)">(64)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 90.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-5">
+      <a href="katalog.html" class="btn btn-outline-success rounded-pill px-4 py-2 fw-semibold">Lihat Semua Produk <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section style="background:linear-gradient(120deg,var(--green-dark),var(--green-mid));padding:70px 0;">
+  <div class="container text-center">
+    <h2 style="font-size:2.2rem;color:var(--white);margin-bottom:1rem">Punya Barang Bekas Berkualitas?</h2>
+    <p style="color:rgba(255,255,255,.75);font-size:1rem;max-width:540px;margin:0 auto 2rem">Bergabunglah sebagai penjual di Recycle Marketplace dan ubah barang bekas kamu menjadi penghasilan nyata.</p>
+    <a href="login.html"><button class="btn-hero-primary"><i class="bi bi-shop me-2"></i>Mulai Berjualan</button></a>
+  </div>
+</section>
+
+<!-- BERITA PREVIEW -->
+<section class="section-pad" style="background:var(--white)">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-eyebrow">Informasi Terbaru</span>
+      <h2 class="section-title">Berita & Artikel</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="news-card">
+          <div class="news-img" style="background:linear-gradient(135deg,#d8f3dc,#b7e4c7)">♻️</div>
+          <div class="p-4"><div class="news-tag">Lingkungan</div><div class="news-title">Tren Upcycling 2024: Mengubah Sampah Menjadi Karya Seni</div><div class="news-meta"><i class="bi bi-calendar3 me-1"></i>15 Maret 2024</div></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="news-card">
+          <div class="news-img" style="background:linear-gradient(135deg,#fff8e1,#ffe082)">🌏</div>
+          <div class="p-4"><div class="news-tag">Komunitas</div><div class="news-title">Recycle Marketplace Kini Hadir di 25 Kota di Seluruh Indonesia</div><div class="news-meta"><i class="bi bi-calendar3 me-1"></i>10 Maret 2024</div></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="news-card">
+          <div class="news-img" style="background:linear-gradient(135deg,#e3f2fd,#90caf9)">💡</div>
+          <div class="p-4"><div class="news-tag">Tips & Trik</div><div class="news-title">5 Cara Kreatif Memanfaatkan Botol Plastik Bekas di Rumah</div><div class="news-meta"><i class="bi bi-calendar3 me-1"></i>5 Maret 2024</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a href="berita.html" class="btn btn-outline-success rounded-pill px-4 py-2">Lihat Semua Berita <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="footer-brand mb-3">Recycle</span> Marketplace</div>
+        <p style="font-size:.88rem;line-height:1.7;max-width:280px">Platform jual beli barang daur ulang terpercaya. Bersama kami, jadikan bumi lebih hijau satu transaksi dalam satu waktu.</p>
+        <div class="d-flex gap-2 mt-3">
+          <a class="social-btn" href="#"><i class="bi bi-instagram"></i></a>
+          <a class="social-btn" href="#"><i class="bi bi-facebook"></i></a>
+          <a class="social-btn" href="#"><i class="bi bi-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="col-sm-4 col-lg-2">
+        <div class="footer-heading">Menu</div>
+        <a class="footer-link" href="index.html">Beranda</a>
+        <a class="footer-link" href="katalog.html">Katalog</a>
+        <a class="footer-link" href="berita.html">Berita</a>
+        <a class="footer-link" href="about.html">Tentang Kami</a>
+        <a class="footer-link" href="kontak.html">Kontak</a>
+      </div>
+      <div class="col-sm-4 col-lg-3">
+        <div class="footer-heading">Kategori</div>
+        <a class="footer-link" href="katalog.html">Furnitur Daur Ulang</a>
+        <a class="footer-link" href="katalog.html">Fashion Upcycled</a>
+        <a class="footer-link" href="katalog.html">Dekorasi Rumah</a>
+        <a class="footer-link" href="katalog.html">Kerajinan Tangan</a>
+        <a class="footer-link" href="katalog.html">Peralatan Dapur</a>
+      </div>
+      <div class="col-sm-4 col-lg-3">
+        <div class="footer-heading">Kontak</div>
+        <p style="font-size:.88rem;margin-bottom:.5rem"><i class="bi bi-geo-alt me-2"></i>Purwokerto, Jawa Tengah</p>
+        <p style="font-size:.88rem;margin-bottom:.5rem"><i class="bi bi-telephone me-2"></i>+62 831-3864-0909</p>
+        <p style="font-size:.69rem;margin-bottom:1.2rem"><i class="bi bi-envelope me-2"></i>recyclemarketplace234@gmail.com</p>
+        <div style="background:rgba(255,255,255,.08);border-radius:12px;padding:1rem">
+          <p style="font-size:.78rem;margin-bottom:.6rem;color:rgba(255,255,255,.8)">Daftar newsletter:</p>
+          <div class="input-group">
+            <input type="email" class="form-control" style="border-radius:8px 0 0 8px;border:none;font-size:.82rem" placeholder="Email kamu"/>
+            <button class="btn" style="background:var(--amber);color:var(--green-dark);font-weight:700;font-size:.82rem;border-radius:0 8px 8px 0;border:none">Daftar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider"/>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <p style="font-size:.82rem;margin:0">© 2024 Recycle Marketplace. Semua hak dilindungi.</p>
+      <div class="d-flex gap-3">
+        <a href="#" class="footer-link" style="display:inline">Kebijakan Privasi</a>
+        <a href="#" class="footer-link" style="display:inline">Syarat & Ketentuan</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.querySelectorAll('.cat-chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recycle Marketplace — Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--green-dark:#1a3d2b;--green-mid:#2d6a4f;--green-light:#52b788;--green-pale:#b7e4c7;--cream:#f4f1e8;--amber:#e9c46a;--white:#ffffff;--text-dark:#1c1c1e;--text-muted:#6b7280;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;background:#eef2ef;color:var(--text-dark);}
+    h1,h2,h3,h4,h5,h6{font-family:'Playfair Display',serif;}
+
+    /* SIDEBAR */
+    .sidebar{background:var(--green-dark);min-height:100vh;width:240px;position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;}
+    .sidebar-brand{padding:1.4rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.1);}
+    .sidebar-brand-text{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--green-pale);}
+    .sidebar-brand-text span{color:var(--amber);}
+    .sidebar-sub{font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:.5px;}
+    .sidebar-nav{padding:1rem 0;flex:1;}
+    .sidebar-section-label{font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);padding:.5rem 1.5rem;margin-top:.5rem;}
+    .nav-item{display:flex;align-items:center;gap:.75rem;padding:.72rem 1.5rem;color:rgba(255,255,255,.65);font-size:.87rem;font-weight:500;cursor:pointer;border-left:3px solid transparent;transition:all .2s;text-decoration:none;}
+    .nav-item:hover{color:var(--white);background:rgba(255,255,255,.06);border-left-color:rgba(255,255,255,.3);}
+    .nav-item.active{color:var(--white);background:rgba(255,255,255,.1);border-left-color:var(--amber);}
+    .nav-item .badge-count{margin-left:auto;background:var(--amber);color:var(--green-dark);font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:50px;}
+    .sidebar-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.1);}
+    .sidebar-user{display:flex;align-items:center;gap:.7rem;}
+    .sidebar-avatar{width:34px;height:34px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+
+    /* MAIN */
+    .main{margin-left:240px;min-height:100vh;}
+    .topbar{background:var(--white);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:50;}
+    .topbar-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--green-dark);}
+    .topbar-actions{display:flex;align-items:center;gap:.75rem;}
+    .topbar-icon-btn{width:36px;height:36px;border:none;background:#f3f4f6;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:var(--text-muted);transition:all .2s;position:relative;}
+    .topbar-icon-btn:hover{background:var(--green-pale);color:var(--green-dark);}
+    .notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid white;}
+    .content{padding:1.5rem;}
+
+    /* STAT WIDGETS */
+    .stat-card{background:var(--white);border-radius:14px;padding:1.4rem;box-shadow:0 2px 12px rgba(0,0,0,.07);}
+    .stat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+    .stat-num{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--green-dark);line-height:1;}
+    .stat-label{font-size:.78rem;color:var(--text-muted);margin-top:.2rem;}
+    .stat-change{font-size:.75rem;font-weight:600;}
+    .stat-change.up{color:#16a34a;}
+    .stat-change.down{color:#dc2626;}
+
+    /* CHART PLACEHOLDER */
+    .chart-card{background:var(--white);border-radius:14px;padding:1.4rem;box-shadow:0 2px 12px rgba(0,0,0,.07);}
+    .chart-bar-wrap{display:flex;align-items:flex-end;gap:8px;height:120px;margin-top:1rem;}
+    .chart-bar{flex:1;border-radius:6px 6px 0 0;background:var(--green-pale);transition:all .3s;cursor:pointer;position:relative;}
+    .chart-bar:hover{background:var(--green-light);}
+    .chart-bar.active{background:var(--green-dark);}
+    .chart-month{font-size:.68rem;color:var(--text-muted);text-align:center;margin-top:.3rem;}
+
+    /* TABLE */
+    .table-card{background:var(--white);border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);}
+    .table-header{padding:1.1rem 1.4rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f3f4f6;}
+    .table-title{font-size:.95rem;font-weight:700;color:var(--green-dark);}
+    table{width:100%;border-collapse:collapse;}
+    thead th{background:var(--green-dark);color:var(--white);font-size:.78rem;font-weight:600;letter-spacing:.5px;padding:.75rem 1rem;text-align:left;border:none;}
+    tbody td{padding:.8rem 1rem;font-size:.87rem;border-bottom:1px solid #f9fafb;vertical-align:middle;}
+    tbody tr:hover{background:#f9fafb;}
+    tbody tr:last-child td{border:none;}
+
+    /* BADGES */
+    .badge-status{font-size:.72rem;font-weight:600;padding:.25rem .6rem;border-radius:50px;}
+    .badge-done{background:#d1fae5;color:#065f46;}
+    .badge-sent{background:#fef3c7;color:#92400e;}
+    .badge-process{background:#dbeafe;color:#1e40af;}
+    .badge-wait{background:#fee2e2;color:#991b1b;}
+
+    /* RESPONSIVE */
+    @media(max-width:992px){.sidebar{transform:translateX(-100%);}.main{margin-left:0;}}
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-text">Recycle<span>Marketplace</span></div>
+    <div class="sidebar-sub">Admin Panel</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-section-label">Utama</div>
+    <a class="nav-item active" href="admin.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+    <a class="nav-item" href="#"><i class="bi bi-bag"></i> Produk<span class="badge-count">12K</span></a>
+    <a class="nav-item" href="#"><i class="bi bi-cart3"></i> Pesanan<span class="badge-count">8</span></a>
+    <div class="sidebar-section-label">Pengguna</div>
+    <a class="nav-item" href="#"><i class="bi bi-people"></i> Pengguna</a>
+    <a class="nav-item" href="#"><i class="bi bi-shop"></i> Penjual</a>
+    <div class="sidebar-section-label">Konten</div>
+    <a class="nav-item" href="#"><i class="bi bi-newspaper"></i> Berita</a>
+    <a class="nav-item" href="#"><i class="bi bi-star"></i> Ulasan</a>
+    <div class="sidebar-section-label">Laporan</div>
+    <a class="nav-item" href="#"><i class="bi bi-bar-chart"></i> Analitik</a>
+    <a class="nav-item" href="#"><i class="bi bi-download"></i> Ekspor Data</a>
+    <a class="nav-item" href="#"><i class="bi bi-gear"></i> Pengaturan</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar">👤</div>
+      <div>
+        <div style="font-size:.82rem;font-weight:700;color:var(--white)">Admin</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.4)">Super Admin</div>
+      </div>
+      <a href="login.html" style="margin-left:auto;color:rgba(255,255,255,.4);font-size:1rem;text-decoration:none" title="Keluar"><i class="bi bi-box-arrow-right"></i></a>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div>
+      <div class="topbar-title">Dashboard</div>
+      <div style="font-size:.78rem;color:var(--text-muted)">Selamat datang kembali, Admin 👋</div>
+    </div>
+    <div class="topbar-actions">
+      <div style="font-size:.8rem;color:var(--text-muted);background:#f3f4f6;padding:.4rem .8rem;border-radius:8px"><i class="bi bi-calendar3 me-1"></i>Maret 2025</div>
+      <button class="topbar-icon-btn"><i class="bi bi-bell"></i><span class="notif-dot"></span></button>
+      <button class="topbar-icon-btn"><i class="bi bi-search"></i></button>
+      <a href="index.html" class="btn btn-sm btn-outline-success rounded-pill px-3" style="font-size:.8rem">Lihat Situs</a>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- STATS -->
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="d-flex align-items-start justify-content-between mb-3">
+            <div class="stat-icon" style="background:#d8f3dc">💰</div>
+            <span class="stat-change up"><i class="bi bi-arrow-up-short"></i>+12.4%</span>
+          </div>
+          <div class="stat-num">Rp 48M</div>
+          <div class="stat-label">Total Pendapatan Bulan Ini</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="d-flex align-items-start justify-content-between mb-3">
+            <div class="stat-icon" style="background:#fff8e1">🛒</div>
+            <span class="stat-change up"><i class="bi bi-arrow-up-short"></i>+8.1%</span>
+          </div>
+          <div class="stat-num">1,284</div>
+          <div class="stat-label">Total Pesanan Bulan Ini</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="d-flex align-items-start justify-content-between mb-3">
+            <div class="stat-icon" style="background:#e3f2fd">👥</div>
+            <span class="stat-change up"><i class="bi bi-arrow-up-short"></i>+25.3%</span>
+          </div>
+          <div class="stat-num">8,420</div>
+          <div class="stat-label">Pengguna Aktif</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="d-flex align-items-start justify-content-between mb-3">
+            <div class="stat-icon" style="background:#f3e5f5">📦</div>
+            <span class="stat-change down"><i class="bi bi-arrow-down-short"></i>-2.1%</span>
+          </div>
+          <div class="stat-num">12,548</div>
+          <div class="stat-label">Produk Aktif</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHART + SUMMARY -->
+    <div class="row g-3 mb-4">
+      <div class="col-lg-8">
+        <div class="chart-card">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div style="font-size:.95rem;font-weight:700;color:var(--green-dark)">Pendapatan Bulanan</div>
+              <div style="font-size:.78rem;color:var(--text-muted)">Januari — Desember 2025</div>
+            </div>
+            <select class="form-select form-select-sm" style="width:120px;border-radius:8px;font-size:.82rem">
+              <option>2024</option><option>2025</option>
+            </select>
+          </div>
+          <div class="chart-bar-wrap">
+            <div><div class="chart-bar" style="height:55%"></div><div class="chart-month">Jan</div></div>
+            <div><div class="chart-bar" style="height:65%"></div><div class="chart-month">Feb</div></div>
+            <div><div class="chart-bar" style="height:50%"></div><div class="chart-month">Mar</div></div>
+            <div><div class="chart-bar" style="height:78%"></div><div class="chart-month">Apr</div></div>
+            <div><div class="chart-bar" style="height:60%"></div><div class="chart-month">Mei</div></div>
+            <div><div class="chart-bar" style="height:88%"></div><div class="chart-month">Jun</div></div>
+            <div><div class="chart-bar active" style="height:100%"></div><div class="chart-month">Jul</div></div>
+            <div><div class="chart-bar" style="height:92%"></div><div class="chart-month">Agu</div></div>
+            <div><div class="chart-bar" style="height:75%"></div><div class="chart-month">Sep</div></div>
+            <div><div class="chart-bar" style="height:83%"></div><div class="chart-month">Okt</div></div>
+            <div><div class="chart-bar" style="height:70%"></div><div class="chart-month">Nov</div></div>
+            <div><div class="chart-bar" style="height:95%"></div><div class="chart-month">Des</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="chart-card h-100">
+          <div style="font-size:.95rem;font-weight:700;color:var(--green-dark);margin-bottom:1rem">Kategori Terlaris</div>
+          <div class="d-flex flex-column gap-3">
+            <div>
+              <div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Furnitur</span><span style="font-size:.82rem;font-weight:600">34%</span></div>
+              <div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:var(--green-dark);width:34%;border-radius:50px;height:100%"></div></div>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Dekorasi</span><span style="font-size:.82rem;font-weight:600">28%</span></div>
+              <div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:var(--green-light);width:28%;border-radius:50px;height:100%"></div></div>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Pakaian</span><span style="font-size:.82rem;font-weight:600">19%</span></div>
+              <div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:var(--amber);width:19%;border-radius:50px;height:100%"></div></div>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Taman</span><span style="font-size:.82rem;font-weight:600">12%</span></div>
+              <div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:#93c5fd;width:12%;border-radius:50px;height:100%"></div></div>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Lainnya</span><span style="font-size:.82rem;font-weight:600">7%</span></div>
+              <div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:#d1d5db;width:7%;border-radius:50px;height:100%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS TABLE -->
+    <div class="table-card mb-4">
+      <div class="table-header">
+        <div class="table-title">Pesanan Terbaru</div>
+        <div class="d-flex gap-2">
+          <input type="text" placeholder="Cari pesanan..." style="border:1px solid #e5e7eb;border-radius:8px;padding:.35rem .75rem;font-size:.82rem;outline:none"/>
+          <button class="btn btn-sm btn-outline-success rounded-pill px-3" style="font-size:.8rem">Lihat Semua</button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr><th>ID Pesanan</th><th>Pelanggan</th><th>Produk</th><th>Total</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td style="font-weight:600">#RGM-001</td><td>Sari Wulandari</td><td>Kursi Kayu Palet</td><td style="font-weight:600">Rp 320.000</td><td style="color:var(--text-muted)">20 Mar 2025</td><td><span class="badge-status badge-done">Selesai</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
+            <tr><td style="font-weight:600">#RGM-002</td><td>Budi Hartono</td><td>Tas Kain Perca</td><td style="font-weight:600">Rp 75.000</td><td style="color:var(--text-muted)">19 Mar 2025</td><td><span class="badge-status badge-sent">Dikirim</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
+            <tr><td style="font-weight:600">#RGM-003</td><td>Maya Pratiwi</td><td>Lilin Aromaterapi</td><td style="font-weight:600">Rp 110.000</td><td style="color:var(--text-muted)">18 Mar 2025</td><td><span class="badge-status badge-process">Diproses</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
+            <tr><td style="font-weight:600">#RGM-004</td><td>Rina Kusuma</td><td>Set Pot Tanaman</td><td style="font-weight:600">Rp 90.000</td><td style="color:var(--text-muted)">18 Mar 2025</td><td><span class="badge-status badge-wait">Menunggu</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
+            <tr><td style="font-weight:600">#RGM-005</td><td>Doni Firmansyah</td><td>Buku Catatan</td><td style="font-weight:600">Rp 60.000</td><td style="color:var(--text-muted)">17 Mar 2025</td><td><span class="badge-status badge-done">Selesai</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
+            <tr><td style="font-weight:600">#RGM-006</td><td>Lina Soesanti</td><td>Bingkai Foto Kayu</td><td style="font-weight:600">Rp 45.000</td><td style="color:var(--text-muted)">17 Mar 2025</td><td><span class="badge-status badge-sent">Dikirim</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">Produk Stok Rendah</div>
+            <span style="font-size:.75rem;color:#dc2626;font-weight:600">⚠ 3 item kritis</span>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead><tr><th>Produk</th><th>Stok</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Kursi Kayu Palet</td><td style="font-weight:600;color:#dc2626">2</td><td><span class="badge-status badge-wait">Kritis</span></td></tr>
+                <tr><td>Lilin Soy Wax Premium</td><td style="font-weight:600;color:#d97706">8</td><td><span class="badge-status badge-sent">Rendah</span></td></tr>
+                <tr><td>Tas Kain Perca Batik</td><td style="font-weight:600;color:#d97706">5</td><td><span class="badge-status badge-sent">Rendah</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-card">
+          <div style="font-size:.95rem;font-weight:700;color:var(--green-dark);margin-bottom:1rem">Aktivitas Terbaru</div>
+          <div class="d-flex flex-column gap-3">
+            <div class="d-flex align-items-start gap-2">
+              <div style="width:32px;height:32px;background:#d8f3dc;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">🛒</div>
+              <div><div style="font-size:.85rem;font-weight:600">Pesanan baru dari Sari W.</div><div style="font-size:.75rem;color:var(--text-muted)">2 menit lalu · Kursi Kayu Palet</div></div>
+            </div>
+            <div class="d-flex align-items-start gap-2">
+              <div style="width:32px;height:32px;background:#fff8e1;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">👤</div>
+              <div><div style="font-size:.85rem;font-weight:600">Penjual baru mendaftar</div><div style="font-size:.75rem;color:var(--text-muted)">15 menit lalu · CV Kreasi Hijau</div></div>
+            </div>
+            <div class="d-flex align-items-start gap-2">
+              <div style="width:32px;height:32px;background:#e3f2fd;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">⭐</div>
+              <div><div style="font-size:.85rem;font-weight:600">Ulasan 5 bintang masuk</div><div style="font-size:.75rem;color:var(--text-muted)">1 jam lalu · Lilin Aromaterapi</div></div>
+            </div>
+            <div class="d-flex align-items-start gap-2">
+              <div style="width:32px;height:32px;background:#fce4ec;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">⚠️</div>
+              <div><div style="font-size:.85rem;font-weight:600">Laporan produk masuk</div><div style="font-size:.75rem;color:var(--text-muted)">3 jam lalu · Perlu ditinjau</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4" style="font-size:.78rem;color:var(--text-muted)">© 2025 Recycle Marketplace — Admin Panel v2.1.0</div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
