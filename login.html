@@ -372,7 +372,16 @@
     if (!agreed) { showFieldErr(null,'agreeErr','Harap setujui syarat & ketentuan'); valid=false; }
     if (!valid) return;
 
-    setLoading('registerBtn','registerSpinner','registerBtnText','registerArrow', true);
+    const btn = document.getElementById('registerBtn');
+    const spinner = document.getElementById('registerSpinner');
+    const btnText = document.getElementById('registerBtnText');
+    const arrow = document.getElementById('registerArrow');
+
+    // Set loading state
+    btn.disabled = true;
+    spinner.style.display = 'inline-block';
+    arrow.style.display = 'none';
+    btnText.textContent = 'Memproses...';
 
     try {
       // 1. Buat akun di Firebase Auth
@@ -397,9 +406,13 @@
       setTimeout(() => { window.location.href = "dashboard.html"; }, 1500);
 
     } catch (err) {
-      showError(firebaseErrMsg(err.code));
-    } finally {
-      setLoading('registerBtn','registerSpinner','registerBtnText','registerArrow', false);
+      console.error('Register error:', err);
+      showError(firebaseErrMsg(err.code) + ' (kode: ' + err.code + ')');
+      // Reset button
+      btn.disabled = false;
+      spinner.style.display = 'none';
+      arrow.style.display = 'inline';
+      btnText.textContent = 'Buat Akun';
     }
   };
 
