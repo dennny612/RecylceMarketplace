@@ -13,6 +13,12 @@
     body{font-family:'DM Sans',sans-serif;background:#eef2ef;color:var(--text-dark);}
     h1,h2,h3,h4,h5,h6{font-family:'Playfair Display',serif;}
 
+    /* LOADING SCREEN */
+    #authLoading{position:fixed;inset:0;background:var(--green-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;}
+    #authLoading .spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,.2);border-top-color:var(--amber);border-radius:50%;animation:spin .7s linear infinite;margin-bottom:1rem;}
+    #authLoading p{color:rgba(255,255,255,.7);font-size:.88rem;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
     /* SIDEBAR */
     .sidebar{background:var(--green-dark);min-height:100vh;width:240px;position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;}
     .sidebar-brand{padding:1.4rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.1);}
@@ -27,16 +33,17 @@
     .nav-item .badge-count{margin-left:auto;background:var(--amber);color:var(--green-dark);font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:50px;}
     .sidebar-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.1);}
     .sidebar-user{display:flex;align-items:center;gap:.7rem;}
-    .sidebar-avatar{width:34px;height:34px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+    .sidebar-avatar{width:34px;height:34px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+    .btn-logout{margin-left:auto;color:rgba(255,255,255,.4);font-size:1rem;text-decoration:none;background:none;border:none;cursor:pointer;padding:0;transition:color .2s;}
+    .btn-logout:hover{color:#ef4444;}
 
     /* MAIN */
     .main{margin-left:240px;min-height:100vh;}
     .topbar{background:var(--white);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:50;}
     .topbar-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--green-dark);}
     .topbar-actions{display:flex;align-items:center;gap:.75rem;}
-    .topbar-icon-btn{width:36px;height:36px;border:none;background:#f3f4f6;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:var(--text-muted);transition:all .2s;position:relative;}
+    .topbar-icon-btn{width:36px;height:36px;border:none;background:#f3f4f6;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:var(--text-muted);transition:all .2s;}
     .topbar-icon-btn:hover{background:var(--green-pale);color:var(--green-dark);}
-    .notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid white;}
     .content{padding:1.5rem;}
 
     /* STAT WIDGETS */
@@ -48,17 +55,17 @@
     .stat-change.up{color:#16a34a;}
     .stat-change.down{color:#dc2626;}
 
-    /* CHART PLACEHOLDER */
+    /* CHART */
     .chart-card{background:var(--white);border-radius:14px;padding:1.4rem;box-shadow:0 2px 12px rgba(0,0,0,.07);}
     .chart-bar-wrap{display:flex;align-items:flex-end;gap:8px;height:120px;margin-top:1rem;}
-    .chart-bar{flex:1;border-radius:6px 6px 0 0;background:var(--green-pale);transition:all .3s;cursor:pointer;position:relative;}
+    .chart-bar{flex:1;border-radius:6px 6px 0 0;background:var(--green-pale);transition:all .3s;cursor:pointer;}
     .chart-bar:hover{background:var(--green-light);}
     .chart-bar.active{background:var(--green-dark);}
     .chart-month{font-size:.68rem;color:var(--text-muted);text-align:center;margin-top:.3rem;}
 
     /* TABLE */
     .table-card{background:var(--white);border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);}
-    .table-header{padding:1.1rem 1.4rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f3f4f6;}
+    .table-header{padding:1.1rem 1.4rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f3f4f6;flex-wrap:wrap;gap:.5rem;}
     .table-title{font-size:.95rem;font-weight:700;color:var(--green-dark);}
     table{width:100%;border-collapse:collapse;}
     thead th{background:var(--green-dark);color:var(--white);font-size:.78rem;font-weight:600;letter-spacing:.5px;padding:.75rem 1rem;text-align:left;border:none;}
@@ -72,12 +79,23 @@
     .badge-sent{background:#fef3c7;color:#92400e;}
     .badge-process{background:#dbeafe;color:#1e40af;}
     .badge-wait{background:#fee2e2;color:#991b1b;}
+    .badge-user{background:#e0f2fe;color:#0369a1;}
+    .badge-admin{background:#fef3c7;color:#92400e;}
 
-    /* RESPONSIVE */
+    /* USER TABLE loading */
+    .skeleton{background:linear-gradient(90deg,#f3f4f6 25%,#e5e7eb 50%,#f3f4f6 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:6px;height:16px;}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
     @media(max-width:992px){.sidebar{transform:translateX(-100%);}.main{margin-left:0;}}
   </style>
 </head>
 <body>
+
+<!-- AUTH LOADING -->
+<div id="authLoading">
+  <div class="spinner"></div>
+  <p>Memverifikasi akses admin...</p>
+</div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
@@ -91,7 +109,7 @@
     <a class="nav-item" href="#"><i class="bi bi-bag"></i> Produk<span class="badge-count">12K</span></a>
     <a class="nav-item" href="#"><i class="bi bi-cart3"></i> Pesanan<span class="badge-count">8</span></a>
     <div class="sidebar-section-label">Pengguna</div>
-    <a class="nav-item" href="#"><i class="bi bi-people"></i> Pengguna</a>
+    <a class="nav-item" href="#" onclick="scrollToUsers()"><i class="bi bi-people"></i> Pengguna<span class="badge-count" id="sidebarUserCount">...</span></a>
     <a class="nav-item" href="#"><i class="bi bi-shop"></i> Penjual</a>
     <div class="sidebar-section-label">Konten</div>
     <a class="nav-item" href="#"><i class="bi bi-newspaper"></i> Berita</a>
@@ -104,28 +122,26 @@
   <div class="sidebar-footer">
     <div class="sidebar-user">
       <div class="sidebar-avatar">👤</div>
-      <div>
-        <div style="font-size:.82rem;font-weight:700;color:var(--white)">Admin</div>
-        <div style="font-size:.72rem;color:rgba(255,255,255,.4)">Super Admin</div>
+      <div style="min-width:0">
+        <div style="font-size:.82rem;font-weight:700;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="adminName">Admin</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.4)" id="adminEmail">Super Admin</div>
       </div>
-      <a href="login.html" style="margin-left:auto;color:rgba(255,255,255,.4);font-size:1rem;text-decoration:none" title="Keluar"><i class="bi bi-box-arrow-right"></i></a>
+      <button class="btn-logout" onclick="handleLogout()" title="Keluar"><i class="bi bi-box-arrow-right"></i></button>
     </div>
   </div>
 </aside>
 
 <!-- MAIN CONTENT -->
 <main class="main">
-  <!-- TOPBAR -->
   <div class="topbar">
     <div>
       <div class="topbar-title">Dashboard</div>
-      <div style="font-size:.78rem;color:var(--text-muted)">Selamat datang kembali, Admin 👋</div>
+      <div style="font-size:.78rem;color:var(--text-muted)">Selamat datang kembali, <span id="topbarName">Admin</span> 👋</div>
     </div>
     <div class="topbar-actions">
-      <div style="font-size:.8rem;color:var(--text-muted);background:#f3f4f6;padding:.4rem .8rem;border-radius:8px"><i class="bi bi-calendar3 me-1"></i>Maret 2025</div>
-      <button class="topbar-icon-btn"><i class="bi bi-bell"></i><span class="notif-dot"></span></button>
-      <button class="topbar-icon-btn"><i class="bi bi-search"></i></button>
+      <div style="font-size:.8rem;color:var(--text-muted);background:#f3f4f6;padding:.4rem .8rem;border-radius:8px" id="todayDate"></div>
       <a href="index.html" class="btn btn-sm btn-outline-success rounded-pill px-3" style="font-size:.8rem">Lihat Situs</a>
+      <button class="btn btn-sm btn-danger rounded-pill px-3" style="font-size:.8rem" onclick="handleLogout()"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
     </div>
   </div>
 
@@ -159,8 +175,8 @@
             <div class="stat-icon" style="background:#e3f2fd">👥</div>
             <span class="stat-change up"><i class="bi bi-arrow-up-short"></i>+25.3%</span>
           </div>
-          <div class="stat-num">8,420</div>
-          <div class="stat-label">Pengguna Aktif</div>
+          <div class="stat-num" id="statUserCount">...</div>
+          <div class="stat-label">Total Pengguna Terdaftar</div>
         </div>
       </div>
       <div class="col-sm-6 col-xl-3">
@@ -184,9 +200,6 @@
               <div style="font-size:.95rem;font-weight:700;color:var(--green-dark)">Pendapatan Bulanan</div>
               <div style="font-size:.78rem;color:var(--text-muted)">Januari — Desember 2025</div>
             </div>
-            <select class="form-select form-select-sm" style="width:120px;border-radius:8px;font-size:.82rem">
-              <option>2024</option><option>2025</option>
-            </select>
           </div>
           <div class="chart-bar-wrap">
             <div><div class="chart-bar" style="height:55%"></div><div class="chart-month">Jan</div></div>
@@ -208,28 +221,33 @@
         <div class="chart-card h-100">
           <div style="font-size:.95rem;font-weight:700;color:var(--green-dark);margin-bottom:1rem">Kategori Terlaris</div>
           <div class="d-flex flex-column gap-3">
-            <div>
-              <div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Furnitur</span><span style="font-size:.82rem;font-weight:600">34%</span></div>
-              <div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:var(--green-dark);width:34%;border-radius:50px;height:100%"></div></div>
-            </div>
-            <div>
-              <div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Dekorasi</span><span style="font-size:.82rem;font-weight:600">28%</span></div>
-              <div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:var(--green-light);width:28%;border-radius:50px;height:100%"></div></div>
-            </div>
-            <div>
-              <div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Pakaian</span><span style="font-size:.82rem;font-weight:600">19%</span></div>
-              <div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:var(--amber);width:19%;border-radius:50px;height:100%"></div></div>
-            </div>
-            <div>
-              <div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Taman</span><span style="font-size:.82rem;font-weight:600">12%</span></div>
-              <div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:#93c5fd;width:12%;border-radius:50px;height:100%"></div></div>
-            </div>
-            <div>
-              <div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Lainnya</span><span style="font-size:.82rem;font-weight:600">7%</span></div>
-              <div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:#d1d5db;width:7%;border-radius:50px;height:100%"></div></div>
-            </div>
+            <div><div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Furnitur</span><span style="font-size:.82rem;font-weight:600">34%</span></div><div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:var(--green-dark);width:34%;border-radius:50px;height:100%"></div></div></div>
+            <div><div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Dekorasi</span><span style="font-size:.82rem;font-weight:600">28%</span></div><div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:var(--green-light);width:28%;border-radius:50px;height:100%"></div></div></div>
+            <div><div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Pakaian</span><span style="font-size:.82rem;font-weight:600">19%</span></div><div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:var(--amber);width:19%;border-radius:50px;height:100%"></div></div></div>
+            <div><div class="d-flex justify-content-between mb-1"><span style="font-size:.82rem">Taman</span><span style="font-size:.82rem;font-weight:600">12%</span></div><div style="background:#f3f4f6;border-radius:50px;height:6px"><div style="background:#93c5fd;width:12%;border-radius:50px;height:100%"></div></div></div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- USERS TABLE (dari Firestore) -->
+    <div class="table-card mb-4" id="usersSection">
+      <div class="table-header">
+        <div class="table-title"><i class="bi bi-people me-2"></i>Daftar Pengguna Terdaftar</div>
+        <div class="d-flex gap-2 align-items-center flex-wrap">
+          <input type="text" id="userSearch" placeholder="Cari nama / email..." oninput="filterUsers()" style="border:1px solid #e5e7eb;border-radius:8px;padding:.35rem .75rem;font-size:.82rem;outline:none;width:200px"/>
+          <button onclick="loadUsers()" class="btn btn-sm btn-outline-success rounded-pill px-3" style="font-size:.8rem"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Nama</th><th>Email</th><th>Role</th><th>Provider</th><th>Bergabung</th><th>Aksi</th></tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr><td colspan="7" class="text-center py-4" style="color:var(--text-muted)"><div class="spinner-border spinner-border-sm text-success me-2"></div>Memuat data pengguna...</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -237,70 +255,17 @@
     <div class="table-card mb-4">
       <div class="table-header">
         <div class="table-title">Pesanan Terbaru</div>
-        <div class="d-flex gap-2">
-          <input type="text" placeholder="Cari pesanan..." style="border:1px solid #e5e7eb;border-radius:8px;padding:.35rem .75rem;font-size:.82rem;outline:none"/>
-          <button class="btn btn-sm btn-outline-success rounded-pill px-3" style="font-size:.8rem">Lihat Semua</button>
-        </div>
       </div>
       <div class="table-responsive">
         <table>
-          <thead>
-            <tr><th>ID Pesanan</th><th>Pelanggan</th><th>Produk</th><th>Total</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr>
-          </thead>
+          <thead><tr><th>ID Pesanan</th><th>Pelanggan</th><th>Produk</th><th>Total</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr></thead>
           <tbody>
             <tr><td style="font-weight:600">#RGM-001</td><td>Sari Wulandari</td><td>Kursi Kayu Palet</td><td style="font-weight:600">Rp 320.000</td><td style="color:var(--text-muted)">20 Mar 2025</td><td><span class="badge-status badge-done">Selesai</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
             <tr><td style="font-weight:600">#RGM-002</td><td>Budi Hartono</td><td>Tas Kain Perca</td><td style="font-weight:600">Rp 75.000</td><td style="color:var(--text-muted)">19 Mar 2025</td><td><span class="badge-status badge-sent">Dikirim</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
             <tr><td style="font-weight:600">#RGM-003</td><td>Maya Pratiwi</td><td>Lilin Aromaterapi</td><td style="font-weight:600">Rp 110.000</td><td style="color:var(--text-muted)">18 Mar 2025</td><td><span class="badge-status badge-process">Diproses</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
             <tr><td style="font-weight:600">#RGM-004</td><td>Rina Kusuma</td><td>Set Pot Tanaman</td><td style="font-weight:600">Rp 90.000</td><td style="color:var(--text-muted)">18 Mar 2025</td><td><span class="badge-status badge-wait">Menunggu</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
-            <tr><td style="font-weight:600">#RGM-005</td><td>Doni Firmansyah</td><td>Buku Catatan</td><td style="font-weight:600">Rp 60.000</td><td style="color:var(--text-muted)">17 Mar 2025</td><td><span class="badge-status badge-done">Selesai</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
-            <tr><td style="font-weight:600">#RGM-006</td><td>Lina Soesanti</td><td>Bingkai Foto Kayu</td><td style="font-weight:600">Rp 45.000</td><td style="color:var(--text-muted)">17 Mar 2025</td><td><span class="badge-status badge-sent">Dikirim</span></td><td><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Detail</a></td></tr>
           </tbody>
         </table>
-      </div>
-    </div>
-
-    <!-- BOTTOM ROW -->
-    <div class="row g-3">
-      <div class="col-lg-6">
-        <div class="table-card">
-          <div class="table-header">
-            <div class="table-title">Produk Stok Rendah</div>
-            <span style="font-size:.75rem;color:#dc2626;font-weight:600">⚠ 3 item kritis</span>
-          </div>
-          <div class="table-responsive">
-            <table>
-              <thead><tr><th>Produk</th><th>Stok</th><th>Status</th></tr></thead>
-              <tbody>
-                <tr><td>Kursi Kayu Palet</td><td style="font-weight:600;color:#dc2626">2</td><td><span class="badge-status badge-wait">Kritis</span></td></tr>
-                <tr><td>Lilin Soy Wax Premium</td><td style="font-weight:600;color:#d97706">8</td><td><span class="badge-status badge-sent">Rendah</span></td></tr>
-                <tr><td>Tas Kain Perca Batik</td><td style="font-weight:600;color:#d97706">5</td><td><span class="badge-status badge-sent">Rendah</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="chart-card">
-          <div style="font-size:.95rem;font-weight:700;color:var(--green-dark);margin-bottom:1rem">Aktivitas Terbaru</div>
-          <div class="d-flex flex-column gap-3">
-            <div class="d-flex align-items-start gap-2">
-              <div style="width:32px;height:32px;background:#d8f3dc;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">🛒</div>
-              <div><div style="font-size:.85rem;font-weight:600">Pesanan baru dari Sari W.</div><div style="font-size:.75rem;color:var(--text-muted)">2 menit lalu · Kursi Kayu Palet</div></div>
-            </div>
-            <div class="d-flex align-items-start gap-2">
-              <div style="width:32px;height:32px;background:#fff8e1;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">👤</div>
-              <div><div style="font-size:.85rem;font-weight:600">Penjual baru mendaftar</div><div style="font-size:.75rem;color:var(--text-muted)">15 menit lalu · CV Kreasi Hijau</div></div>
-            </div>
-            <div class="d-flex align-items-start gap-2">
-              <div style="width:32px;height:32px;background:#e3f2fd;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">⭐</div>
-              <div><div style="font-size:.85rem;font-weight:600">Ulasan 5 bintang masuk</div><div style="font-size:.75rem;color:var(--text-muted)">1 jam lalu · Lilin Aromaterapi</div></div>
-            </div>
-            <div class="d-flex align-items-start gap-2">
-              <div style="width:32px;height:32px;background:#fce4ec;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">⚠️</div>
-              <div><div style="font-size:.85rem;font-weight:600">Laporan produk masuk</div><div style="font-size:.75rem;color:var(--text-muted)">3 jam lalu · Perlu ditinjau</div></div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -308,6 +273,188 @@
   </div>
 </main>
 
+<!-- Modal Ubah Role -->
+<div class="modal fade" id="roleModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content" style="border-radius:16px;border:none">
+      <div class="modal-header" style="background:var(--green-dark);color:white;border-radius:16px 16px 0 0;border:none">
+        <h6 class="modal-title" style="font-family:'Playfair Display',serif">Ubah Role Pengguna</h6>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:.85rem;color:var(--text-muted)" id="roleModalDesc"></p>
+        <select class="form-select" id="roleSelect" style="border-radius:8px;font-size:.88rem">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="modal-footer" style="border:none">
+        <button class="btn btn-sm btn-secondary rounded-pill px-3" data-bs-dismiss="modal">Batal</button>
+        <button class="btn btn-sm rounded-pill px-3" style="background:var(--green-dark);color:white" onclick="saveRole()">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBhE0M_0JOzs5RdSllOcNGTID4WjHee1t4",
+    authDomain: "recyclemarketplaceweb.firebaseapp.com",
+    databaseURL: "https://recyclemarketplaceweb-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "recyclemarketplaceweb",
+    storageBucket: "recyclemarketplaceweb.firebasestorage.app",
+    messagingSenderId: "856529277069",
+    appId: "1:856529277069:web:604cb6bddb1e754bef92c4",
+    measurementId: "G-QXNFTCN8J7"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+
+  let allUsers = [];
+  let editingUid = null;
+
+  // ── Tanggal hari ini ──
+  const now = new Date();
+  document.getElementById('todayDate').textContent =
+    now.toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'});
+
+  // ── Auth guard: hanya admin ──
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
+    try {
+      const snap = await getDoc(doc(db, "users", user.uid));
+      if (!snap.exists() || snap.data().role !== "admin") {
+        await signOut(auth);
+        window.location.href = "index.html";
+        return;
+      }
+      // User valid admin
+      const data = snap.data();
+      const name = data.fullName || data.firstName || user.email;
+      document.getElementById('adminName').textContent  = name;
+      document.getElementById('adminEmail').textContent = user.email;
+      document.getElementById('topbarName').textContent = data.firstName || name;
+      document.getElementById('authLoading').style.display = 'none';
+
+      // Load users
+      loadUsers();
+
+    } catch(err) {
+      console.error(err);
+      // Firestore error → tetap tampilkan dashboard, hide loading
+      document.getElementById('authLoading').style.display = 'none';
+    }
+  });
+
+  // ── Load semua user dari Firestore ──
+  window.loadUsers = async function() {
+    const tbody = document.getElementById('usersTableBody');
+    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4" style="color:var(--text-muted)"><div class="spinner-border spinner-border-sm text-success me-2"></div>Memuat data...</td></tr>`;
+
+    try {
+      const q    = query(collection(db, "users"), orderBy("createdAt", "desc"));
+      const snap = await getDocs(q);
+      allUsers   = [];
+      snap.forEach(d => allUsers.push({ id: d.id, ...d.data() }));
+
+      document.getElementById('statUserCount').textContent   = allUsers.length;
+      document.getElementById('sidebarUserCount').textContent = allUsers.length;
+
+      renderUsersTable(allUsers);
+    } catch(err) {
+      console.error(err);
+      tbody.innerHTML = `<tr><td colspan="7" class="text-center py-3" style="color:#dc2626"><i class="bi bi-exclamation-circle me-2"></i>Gagal memuat data: ${err.code || err.message}</td></tr>`;
+    }
+  };
+
+  function renderUsersTable(users) {
+    const tbody = document.getElementById('usersTableBody');
+    if (users.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4" style="color:var(--text-muted)">Tidak ada pengguna ditemukan.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = users.map((u, i) => {
+      const name     = u.fullName || `${u.firstName||''} ${u.lastName||''}`.trim() || '-';
+      const email    = u.email || '-';
+      const role     = u.role || 'user';
+      const provider = u.provider === 'google' ? '<i class="bi bi-google text-danger me-1"></i>Google' : '<i class="bi bi-envelope me-1"></i>Email';
+      const joined   = u.createdAt?.toDate ? u.createdAt.toDate().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}) : '-';
+      const roleBadge = role === 'admin'
+        ? '<span class="badge-status badge-admin">Admin</span>'
+        : '<span class="badge-status badge-user">User</span>';
+      return `
+        <tr>
+          <td style="color:var(--text-muted);font-size:.78rem">${i+1}</td>
+          <td style="font-weight:600">${name}</td>
+          <td style="font-size:.83rem;color:var(--text-muted)">${email}</td>
+          <td>${roleBadge}</td>
+          <td style="font-size:.82rem">${provider}</td>
+          <td style="font-size:.78rem;color:var(--text-muted)">${joined}</td>
+          <td>
+            <button onclick="openRoleModal('${u.id}','${name}','${role}')"
+              style="font-size:.75rem;background:none;border:1px solid #e5e7eb;border-radius:6px;padding:.2rem .5rem;cursor:pointer;color:var(--green-mid);transition:all .2s"
+              onmouseover="this.style.background='var(--green-pale)'" onmouseout="this.style.background='none'">
+              <i class="bi bi-pencil me-1"></i>Role
+            </button>
+          </td>
+        </tr>`;
+    }).join('');
+  }
+
+  // ── Filter / Cari user ──
+  window.filterUsers = function() {
+    const q = document.getElementById('userSearch').value.toLowerCase();
+    const filtered = allUsers.filter(u =>
+      (u.fullName||'').toLowerCase().includes(q) ||
+      (u.firstName||'').toLowerCase().includes(q) ||
+      (u.email||'').toLowerCase().includes(q)
+    );
+    renderUsersTable(filtered);
+  };
+
+  // ── Modal ubah role ──
+  window.openRoleModal = function(uid, name, currentRole) {
+    editingUid = uid;
+    document.getElementById('roleModalDesc').textContent = `Ubah role untuk: ${name}`;
+    document.getElementById('roleSelect').value = currentRole;
+    new bootstrap.Modal(document.getElementById('roleModal')).show();
+  };
+
+  window.saveRole = async function() {
+    if (!editingUid) return;
+    const newRole = document.getElementById('roleSelect').value;
+    try {
+      await updateDoc(doc(db, "users", editingUid), { role: newRole });
+      bootstrap.Modal.getInstance(document.getElementById('roleModal')).hide();
+      loadUsers();
+    } catch(err) {
+      alert('Gagal update role: ' + err.message);
+    }
+  };
+
+  // ── Logout ──
+  window.handleLogout = async function() {
+    if (!confirm('Yakin ingin keluar dari Admin Panel?')) return;
+    await signOut(auth);
+    window.location.href = "login.html";
+  };
+
+  // ── Scroll ke tabel user ──
+  window.scrollToUsers = function() {
+    document.getElementById('usersSection').scrollIntoView({ behavior:'smooth' });
+  };
+</script>
 </body>
 </html>
