@@ -12,6 +12,7 @@
     *{box-sizing:border-box;}
     body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);}
     h1,h2,h3,h4{font-family:'Playfair Display',serif;}
+
     /* NAVBAR */
     .navbar-custom{background:var(--green-dark);padding:.9rem 0;position:sticky;top:0;z-index:1050;box-shadow:0 2px 20px rgba(0,0,0,.2);}
     .navbar-brand-text{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--green-pale)!important;letter-spacing:-.5px;text-decoration:none;}
@@ -19,9 +20,76 @@
     .nav-link-custom{color:rgba(255,255,255,.82)!important;font-weight:500;font-size:.88rem;padding:.4rem .9rem!important;border-radius:6px;transition:all .2s;text-decoration:none;}
     .nav-link-custom:hover,.nav-link-custom.active{color:var(--amber)!important;background:rgba(255,255,255,.07);}
     .btn-nav-login{background:var(--green-light);color:var(--white)!important;border-radius:50px;padding:.38rem 1.1rem!important;font-weight:600;font-size:.85rem;}
+
+    /* ─── CART BUTTON ─── */
+    .cart-btn{position:relative;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:var(--white);border-radius:50px;padding:.38rem 1rem;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:.4rem;}
+    .cart-btn:hover{background:var(--amber);border-color:var(--amber);color:var(--green-dark);}
+    .cart-badge{position:absolute;top:-6px;right:-6px;background:#ef4444;color:white;font-size:.6rem;font-weight:800;min-width:18px;height:18px;border-radius:50px;display:flex;align-items:center;justify-content:center;border:2px solid var(--green-dark);transition:all .2s;transform:scale(0);}
+    .cart-badge.visible{transform:scale(1);}
+    .cart-badge.bump{animation:bump .3s ease;}
+    @keyframes bump{0%{transform:scale(1);}50%{transform:scale(1.5);}100%{transform:scale(1);}}
+
+    /* ─── CART DRAWER ─── */
+    .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1200;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(3px);}
+    .cart-overlay.open{opacity:1;pointer-events:all;}
+    .cart-drawer{position:fixed;top:0;right:0;width:100%;max-width:400px;height:100vh;background:var(--white);z-index:1300;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.2);}
+    .cart-drawer.open{transform:translateX(0);}
+
+    .cart-header{background:var(--green-dark);padding:1.2rem 1.4rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+    .cart-header-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--white);}
+    .cart-close{background:rgba(255,255,255,.15);border:none;color:white;width:34px;height:34px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+    .cart-close:hover{background:rgba(255,255,255,.3);}
+
+    .cart-body{flex:1;overflow-y:auto;padding:1.2rem;}
+    .cart-body::-webkit-scrollbar{width:4px;}
+    .cart-body::-webkit-scrollbar-track{background:#f3f4f6;}
+    .cart-body::-webkit-scrollbar-thumb{background:var(--green-pale);border-radius:4px;}
+
+    /* Cart Items */
+    .cart-item{display:flex;align-items:center;gap:.9rem;padding:.9rem;background:#f9fafb;border-radius:12px;margin-bottom:.7rem;transition:all .2s;}
+    .cart-item:hover{background:var(--green-pale);}
+    .cart-item-emoji{width:52px;height:52px;background:var(--white);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+    .cart-item-info{flex:1;min-width:0;}
+    .cart-item-name{font-size:.85rem;font-weight:600;color:var(--text-dark);margin-bottom:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .cart-item-cat{font-size:.72rem;color:var(--green-light);text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+    .cart-item-price{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--green-dark);}
+
+    /* Qty controls */
+    .qty-control{display:flex;align-items:center;gap:.4rem;margin-top:.4rem;}
+    .qty-btn{width:24px;height:24px;border-radius:6px;border:1.5px solid #e5e7eb;background:var(--white);font-size:.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;color:var(--green-dark);}
+    .qty-btn:hover{background:var(--green-dark);border-color:var(--green-dark);color:white;}
+    .qty-val{font-size:.85rem;font-weight:700;min-width:20px;text-align:center;color:var(--text-dark);}
+
+    .cart-item-remove{background:none;border:none;color:#d1d5db;font-size:1rem;cursor:pointer;padding:.2rem;border-radius:6px;transition:all .15s;flex-shrink:0;}
+    .cart-item-remove:hover{color:#ef4444;background:#fee2e2;}
+
+    /* Empty State */
+    .cart-empty{text-align:center;padding:3rem 1rem;color:var(--text-muted);}
+    .cart-empty-icon{font-size:4rem;margin-bottom:1rem;opacity:.4;}
+    .cart-empty p{font-size:.9rem;}
+
+    /* Cart Footer */
+    .cart-footer{border-top:1px solid #f3f4f6;padding:1.2rem 1.4rem;flex-shrink:0;}
+    .cart-subtotal{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+    .cart-subtotal-label{font-size:.85rem;color:var(--text-muted);}
+    .cart-subtotal-val{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--text-dark);}
+    .cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.1rem;padding-top:.7rem;border-top:2px dashed #e5e7eb;}
+    .cart-total-label{font-size:.95rem;font-weight:700;color:var(--green-dark);}
+    .cart-total-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--green-dark);}
+    .btn-checkout{background:var(--green-dark);color:var(--white);border:none;border-radius:12px;padding:1rem;font-size:.95rem;font-weight:700;width:100%;cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;}
+    .btn-checkout:hover{background:var(--green-mid);transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,61,43,.35);}
+    .btn-checkout:active{transform:translateY(0);}
+    .btn-clear-cart{background:transparent;color:var(--text-muted);border:none;font-size:.8rem;cursor:pointer;width:100%;margin-top:.6rem;padding:.4rem;border-radius:6px;transition:all .15s;font-family:'DM Sans',sans-serif;}
+    .btn-clear-cart:hover{background:#fee2e2;color:#ef4444;}
+
+    /* Toast notification */
+    .toast-add{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green-dark);color:white;padding:.65rem 1.3rem;border-radius:50px;font-size:.85rem;font-weight:600;z-index:1400;opacity:0;transition:all .3s;white-space:nowrap;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+    .toast-add.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
     /* HERO BANNER */
     .katalog-hero{background:linear-gradient(135deg,var(--green-dark),var(--green-mid));padding:60px 0 40px;position:relative;overflow:hidden;}
     .katalog-hero::after{content:'♻️';position:absolute;right:10%;top:50%;transform:translateY(-50%);font-size:8rem;opacity:.1;}
+
     /* PRODUCT CARD */
     .product-card{background:var(--white);border-radius:16px;overflow:hidden;border:none;box-shadow:0 2px 16px rgba(0,0,0,.07);transition:all .3s;height:100%;}
     .product-card:hover{transform:translateY(-5px);box-shadow:0 12px 40px rgba(0,0,0,.13);}
@@ -35,6 +103,8 @@
     .product-price{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--green-dark);}
     .btn-add-cart{background:var(--green-dark);color:var(--white);border:none;border-radius:50px;padding:.45rem 1.2rem;font-size:.82rem;font-weight:600;transition:all .2s;cursor:pointer;}
     .btn-add-cart:hover{background:var(--green-light);}
+    .btn-add-cart:active{transform:scale(.96);}
+
     /* FILTER */
     .filter-sidebar{background:var(--white);border-radius:16px;padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.07);}
     .filter-group-title{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-dark);margin-bottom:.8rem;padding-bottom:.5rem;border-bottom:2px solid var(--green-pale);}
@@ -47,6 +117,27 @@
     .btn-filter-apply{background:var(--green-dark);color:white;border:none;border-radius:8px;padding:.6rem 1rem;font-size:.85rem;font-weight:600;width:100%;cursor:pointer;transition:all .2s;}
     .btn-filter-apply:hover{background:var(--green-mid);}
     .btn-filter-reset{background:transparent;color:var(--text-muted);border:1.5px solid #e5e7eb;border-radius:8px;padding:.6rem 1rem;font-size:.85rem;font-weight:600;width:100%;cursor:pointer;transition:all .2s;margin-top:.5rem;}
+
+    /* CHECKOUT MODAL */
+    .checkout-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1500;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px);}
+    .checkout-modal-overlay.open{opacity:1;pointer-events:all;}
+    .checkout-modal{background:var(--white);border-radius:20px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;transform:scale(.95) translateY(20px);transition:all .3s;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+    .checkout-modal-overlay.open .checkout-modal{transform:scale(1) translateY(0);}
+    .checkout-modal-header{background:linear-gradient(135deg,var(--green-dark),var(--green-mid));padding:1.5rem;border-radius:20px 20px 0 0;}
+    .checkout-form-group{margin-bottom:1rem;}
+    .checkout-label{font-size:.82rem;font-weight:700;color:var(--green-dark);margin-bottom:.35rem;display:block;}
+    .checkout-input{width:100%;border:2px solid #e5e7eb;border-radius:10px;padding:.7rem 1rem;font-size:.88rem;font-family:'DM Sans',sans-serif;transition:border-color .2s;}
+    .checkout-input:focus{border-color:var(--green-light);outline:none;box-shadow:0 0 0 3px rgba(82,183,136,.15);}
+    .checkout-order-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px dashed #e5e7eb;font-size:.85rem;}
+    .checkout-order-row:last-child{border:none;}
+    .btn-confirm-order{background:var(--green-dark);color:white;border:none;border-radius:12px;padding:1rem;font-size:.95rem;font-weight:700;width:100%;cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;}
+    .btn-confirm-order:hover{background:var(--green-mid);}
+
+    /* SUCCESS STATE */
+    .checkout-success{text-align:center;padding:2.5rem 1.5rem;}
+    .success-icon{font-size:4rem;margin-bottom:1rem;}
+    .success-icon-circle{width:80px;height:80px;background:#d8f3dc;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:2.5rem;}
+
     /* FOOTER */
     .footer{background:var(--green-dark);color:rgba(255,255,255,.75);padding:60px 0 30px;}
     .footer-brand{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--green-pale);}
@@ -57,25 +148,48 @@
     .footer-divider{border-color:rgba(255,255,255,.12);margin:2rem 0 1.5rem;}
     .social-btn{width:38px;height:38px;border-radius:8px;background:rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center;color:var(--white);font-size:1.1rem;transition:all .2s;text-decoration:none;}
     .social-btn:hover{background:var(--green-light);transform:translateY(-2px);color:white;}
+
+    @media(max-width:480px){.cart-drawer{max-width:100%;}}
   </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- ═══ NAVBAR ═══ -->
 <nav class="navbar-custom">
   <div class="container">
     <div class="d-flex align-items-center justify-content-between w-100">
-      <a class="navbar-brand-text" href="index.html">Recycle</span> Marketplace</a>
+      <a class="navbar-brand-text" href="index.html">Recycle <span>Marketplace</span></a>
+
+      <!-- Desktop Nav -->
       <div class="d-none d-lg-flex align-items-center gap-1">
         <a class="nav-link-custom" href="index.html">Beranda</a>
         <a class="nav-link-custom" href="about.html">Tentang Kami</a>
         <a class="nav-link-custom active" href="katalog.html">Katalog</a>
         <a class="nav-link-custom" href="berita.html">Berita</a>
         <a class="nav-link-custom" href="kontak.html">Kontak</a>
-        <div class="ms-2"><a class="nav-link-custom btn-nav-login" href="login.html"><i class="bi bi-person me-1"></i>Masuk</a></div>
+        <div class="ms-3 d-flex align-items-center gap-2">
+          <!-- CART BUTTON -->
+          <button class="cart-btn" id="cartBtn" onclick="openCart()">
+            <i class="bi bi-bag"></i>
+            <span id="cartBtnText">Keranjang</span>
+            <span class="cart-badge" id="cartBadge">0</span>
+          </button>
+          <a class="nav-link-custom btn-nav-login" href="login.html"><i class="bi bi-person me-1"></i>Masuk</a>
+        </div>
       </div>
-      <button class="d-lg-none btn btn-sm" style="color:var(--green-pale);border-color:rgba(255,255,255,.3)" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu"><i class="bi bi-list fs-5"></i></button>
+
+      <!-- Mobile: cart icon + hamburger -->
+      <div class="d-lg-none d-flex align-items-center gap-2">
+        <button class="cart-btn" onclick="openCart()" style="padding:.38rem .75rem">
+          <i class="bi bi-bag"></i>
+          <span class="cart-badge" id="cartBadgeMobile">0</span>
+        </button>
+        <button class="btn btn-sm" style="color:var(--green-pale);border-color:rgba(255,255,255,.3)" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+          <i class="bi bi-list fs-5"></i>
+        </button>
+      </div>
     </div>
+
     <div class="collapse d-lg-none" id="mobileMenu">
       <div class="pt-3 pb-2 d-flex flex-column gap-1">
         <a class="nav-link-custom" href="index.html">Beranda</a>
@@ -89,12 +203,144 @@
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ═══ CART OVERLAY ═══ -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<!-- ═══ CART DRAWER ═══ -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-header-title"><i class="bi bi-bag me-2"></i>Keranjang Belanja</div>
+    <button class="cart-close" onclick="closeCart()"><i class="bi bi-x"></i></button>
+  </div>
+
+  <div class="cart-body" id="cartBody">
+    <!-- Diisi oleh JS -->
+  </div>
+
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-subtotal">
+      <span class="cart-subtotal-label">Subtotal (<span id="cartItemCount">0</span> item)</span>
+      <span class="cart-subtotal-val" id="cartSubtotal">Rp 0</span>
+    </div>
+    <div class="cart-subtotal">
+      <span class="cart-subtotal-label">Ongkos kirim</span>
+      <span class="cart-subtotal-val" style="color:var(--green-light);font-size:.88rem;font-weight:700">GRATIS</span>
+    </div>
+    <div class="cart-total">
+      <span class="cart-total-label">Total Bayar</span>
+      <span class="cart-total-val" id="cartTotal">Rp 0</span>
+    </div>
+    <button class="btn-checkout" onclick="openCheckout()">
+      <i class="bi bi-credit-card me-2"></i>Lanjut ke Pembayaran
+    </button>
+    <button class="btn-clear-cart" onclick="clearCart()">
+      <i class="bi bi-trash3 me-1"></i>Kosongkan Keranjang
+    </button>
+  </div>
+</div>
+
+<!-- ═══ CHECKOUT MODAL ═══ -->
+<div class="checkout-modal-overlay" id="checkoutModal">
+  <div class="checkout-modal" id="checkoutModalBox">
+    <!-- Header -->
+    <div class="checkout-modal-header">
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:white">Checkout</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.7)">Lengkapi data pengiriman</div>
+        </div>
+        <button onclick="closeCheckout()" style="background:rgba(255,255,255,.2);border:none;color:white;width:34px;height:34px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Form + Order Summary -->
+    <div id="checkoutFormSection" style="padding:1.5rem">
+      <!-- Ringkasan Pesanan -->
+      <div style="background:#f9fafb;border-radius:12px;padding:1.1rem;margin-bottom:1.4rem">
+        <div style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-mid);margin-bottom:.8rem">Ringkasan Pesanan</div>
+        <div id="checkoutOrderList"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.8rem;padding-top:.8rem;border-top:2px solid #e5e7eb">
+          <span style="font-weight:700;font-size:.9rem;color:var(--green-dark)">Total</span>
+          <span style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;color:var(--green-dark)" id="checkoutTotal">Rp 0</span>
+        </div>
+      </div>
+
+      <!-- Data Pembeli -->
+      <div style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-mid);margin-bottom:1rem">Data Pembeli</div>
+      <div class="checkout-form-group">
+        <label class="checkout-label">Nama Lengkap</label>
+        <input class="checkout-input" type="text" placeholder="Masukkan nama lengkap"/>
+      </div>
+      <div class="checkout-form-group">
+        <label class="checkout-label">Nomor WhatsApp</label>
+        <input class="checkout-input" type="tel" placeholder="08xx-xxxx-xxxx"/>
+      </div>
+      <div class="checkout-form-group">
+        <label class="checkout-label">Alamat Pengiriman</label>
+        <textarea class="checkout-input" rows="3" placeholder="Jl. Contoh No. 1, Kota, Provinsi..." style="resize:none"></textarea>
+      </div>
+      <div class="row g-2 mb-3">
+        <div class="col-6">
+          <label class="checkout-label">Kota / Kabupaten</label>
+          <input class="checkout-input" type="text" placeholder="Purwokerto"/>
+        </div>
+        <div class="col-6">
+          <label class="checkout-label">Kode Pos</label>
+          <input class="checkout-input" type="text" placeholder="53111"/>
+        </div>
+      </div>
+
+      <!-- Metode Pembayaran -->
+      <div style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-mid);margin-bottom:.8rem">Metode Pembayaran</div>
+      <div class="d-flex flex-column gap-2 mb-4">
+        <label style="display:flex;align-items:center;gap:.8rem;background:#f9fafb;border:2px solid var(--green-light);border-radius:10px;padding:.75rem 1rem;cursor:pointer">
+          <input type="radio" name="payment" value="transfer" checked style="accent-color:var(--green-mid)"/>
+          <span style="font-size:.88rem;font-weight:600">🏦 Transfer Bank (BCA / Mandiri / BRI)</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:.8rem;background:#f9fafb;border:2px solid #e5e7eb;border-radius:10px;padding:.75rem 1rem;cursor:pointer">
+          <input type="radio" name="payment" value="cod" style="accent-color:var(--green-mid)"/>
+          <span style="font-size:.88rem;font-weight:600">🚚 COD (Bayar di Tempat)</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:.8rem;background:#f9fafb;border:2px solid #e5e7eb;border-radius:10px;padding:.75rem 1rem;cursor:pointer">
+          <input type="radio" name="payment" value="ewallet" style="accent-color:var(--green-mid)"/>
+          <span style="font-size:.88rem;font-weight:600">📱 E-Wallet (GoPay / OVO / Dana)</span>
+        </label>
+      </div>
+
+      <button class="btn-confirm-order" onclick="confirmOrder()">
+        <i class="bi bi-check-circle me-2"></i>Konfirmasi Pesanan
+      </button>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div id="checkoutSuccess" style="display:none">
+      <div class="checkout-success">
+        <div class="success-icon-circle">✅</div>
+        <h4 style="font-family:'Playfair Display',serif;color:var(--green-dark);margin-bottom:.5rem">Pesanan Berhasil!</h4>
+        <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:1.5rem">Terima kasih telah berbelanja di Recycle Marketplace. Kami akan segera memproses pesanan Anda.</p>
+        <div style="background:#f0fdf4;border-radius:12px;padding:1rem;margin-bottom:1.5rem;text-align:left">
+          <div style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--green-mid);margin-bottom:.5rem">Nomor Pesanan</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--green-dark)" id="orderNumber">#RCM-00000</div>
+          <div style="font-size:.8rem;color:var(--text-muted);margin-top:.3rem">Konfirmasi dikirim ke WhatsApp Anda</div>
+        </div>
+        <button class="btn-confirm-order" onclick="closeCheckout();clearCart();">
+          <i class="bi bi-house me-2"></i>Kembali Belanja
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast-add" id="toastAdd">✅ Produk ditambahkan ke keranjang!</div>
+
+<!-- ═══ HERO ═══ -->
 <div class="katalog-hero">
   <div class="container text-center">
     <h1 style="font-size:clamp(2rem,5vw,3.5rem);color:var(--white);margin-bottom:.8rem">Katalog <span style="color:var(--amber)">Produk</span></h1>
     <p style="color:rgba(255,255,255,.75);font-size:1rem;max-width:500px;margin:0 auto">Temukan ribuan produk daur ulang berkualitas dari seluruh Indonesia</p>
-    <!-- Search Bar -->
     <div class="d-flex justify-content-center mt-4">
       <div class="input-group" style="max-width:550px">
         <span class="input-group-text bg-white border-0"><i class="bi bi-search text-muted"></i></span>
@@ -105,7 +351,7 @@
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- ═══ MAIN CONTENT ═══ -->
 <div class="container py-5">
   <div class="row g-4">
 
@@ -116,8 +362,6 @@
           <h6 style="font-size:1rem;font-weight:700;color:var(--green-dark);margin:0">Filter Produk</h6>
           <i class="bi bi-sliders" style="color:var(--green-mid)"></i>
         </div>
-
-        <!-- Kategori -->
         <div class="mb-4">
           <div class="filter-group-title">Kategori</div>
           <div class="filter-check"><div><input class="form-check-input me-2" type="checkbox" checked/><label>Kertas</label></div><span>(4)</span></div>
@@ -125,8 +369,6 @@
           <div class="filter-check"><div><input class="form-check-input me-2" type="checkbox"/><label>Kain</label></div><span>(5)</span></div>
           <div class="filter-check"><div><input class="form-check-input me-2" type="checkbox"/><label>Kaca</label></div><span>(6)</span></div>
         </div>
-
-        <!-- Harga -->
         <div class="mb-4">
           <div class="filter-group-title">Rentang Harga</div>
           <div class="price-range mb-2">
@@ -137,23 +379,18 @@
           <input type="range" class="form-range" style="accent-color:var(--green-mid)"/>
           <div class="d-flex justify-content-between" style="font-size:.75rem;color:var(--text-muted)"><span>Rp 0</span><span>Rp 5.000.000</span></div>
         </div>
-
-        <!-- Rating -->
         <div class="mb-4">
           <div class="filter-group-title">Rating</div>
           <div class="filter-check"><div><input class="form-check-input me-2" type="radio" name="rating"/><label>⭐⭐⭐⭐⭐ (5)</label></div></div>
           <div class="filter-check"><div><input class="form-check-input me-2" type="radio" name="rating" checked/><label>⭐⭐⭐⭐ ke atas</label></div></div>
           <div class="filter-check"><div><input class="form-check-input me-2" type="radio" name="rating"/><label>⭐⭐⭐ ke atas</label></div></div>
         </div>
-
-        <!-- Kondisi -->
         <div class="mb-4">
           <div class="filter-group-title">Kondisi Barang</div>
           <div class="filter-check"><div><input class="form-check-input me-2" type="checkbox" checked/><label>Baru Didaur Ulang</label></div></div>
           <div class="filter-check"><div><input class="form-check-input me-2" type="checkbox" checked/><label>Refurbished</label></div></div>
           <div class="filter-check"><div><input class="form-check-input me-2" type="checkbox"/><label>Second Hand</label></div></div>
         </div>
-
         <button class="btn-filter-apply"><i class="bi bi-funnel me-1"></i>Terapkan Filter</button>
         <button class="btn-filter-reset">Reset Filter</button>
       </div>
@@ -161,9 +398,8 @@
 
     <!-- PRODUCTS -->
     <div class="col-lg-9">
-      <!-- Toolbar -->
       <div class="bg-white rounded-3 p-3 mb-4 d-flex flex-wrap align-items-center justify-content-between gap-2 shadow-sm">
-        <div style="font-size:.88rem;color:var(--text-muted)">Menampilkan <strong style="color:var(--green-dark)">1–12</strong> dari <strong style="color:var(--green-dark)">589</strong> produk</div>
+        <div style="font-size:.88rem;color:var(--text-muted)">Menampilkan <strong style="color:var(--green-dark)">1–4</strong> dari <strong style="color:var(--green-dark)">23</strong> produk</div>
         <div class="d-flex gap-2 align-items-center">
           <select class="form-select form-select-sm" style="border-radius:8px;font-size:.82rem;border:1.5px solid #e5e7eb;width:auto">
             <option>Urutkan: Relevansi</option>
@@ -171,22 +407,136 @@
             <option>Harga Tertinggi</option>
             <option>Terlaris</option>
             <option>Terbaru</option>
-            <option>Rating Tertinggi</option>
           </select>
           <div class="btn-group">
-            <button class="btn btn-sm active" style="background:var(--green-dark);color:white;border:none;border-radius:6px 0 0 6px;padding:.35rem .6rem"><i class="bi bi-grid-3x3-gap"></i></button>
+            <button class="btn btn-sm" style="background:var(--green-dark);color:white;border:none;border-radius:6px 0 0 6px;padding:.35rem .6rem"><i class="bi bi-grid-3x3-gap"></i></button>
             <button class="btn btn-sm" style="background:#f3f4f6;border:none;border-radius:0 6px 6px 0;padding:.35rem .6rem"><i class="bi bi-list-ul"></i></button>
           </div>
         </div>
       </div>
 
-      <!-- Product Grid -->
+      <!-- Product Grid — data-* attributes drive the cart -->
       <div class="row g-4" id="productGrid">
-        <div class="col-sm-6 col-xl-4"><div class="product-card"><div class="product-img-wrap" style="background:#e8f5e9"><span class="product-img-icon">🪑</span><span class="badge-eco">Eco</span><span class="badge-new">Terlaris</span></div><div class="product-body"><div class="product-category">Kain</div><div class="product-title">Gantungan kunci bunga matahari</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★★</span><span style="font-size:.75rem;color:var(--text-muted)">(8)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 20.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div></div></div>
-        <div class="col-sm-6 col-xl-4"><div class="product-card"><div class="product-img-wrap" style="background:#fff8e1"><span class="product-img-icon">👜</span><span class="badge-eco">Eco</span></div><div class="product-body"><div class="product-category">Plastik</div><div class="product-title">Tempat pensil karakter</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★☆</span><span style="font-size:.75rem;color:var(--text-muted)">(7)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 15.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div></div></div>
-        <div class="col-sm-6 col-xl-4"><div class="product-card"><div class="product-img-wrap" style="background:#e3f2fd"><span class="product-img-icon">🕯️</span><span class="badge-eco">Eco</span><span class="badge-new">Baru</span></div><div class="product-body"><div class="product-category">Plastik</div><div class="product-title">Lampu hias</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★★</span><span style="font-size:.75rem;color:var(--text-muted)">(15)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 35.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div></div></div>
-        <div class="col-sm-6 col-xl-4"><div class="product-card"><div class="product-img-wrap" style="background:#f3e5f5"><span class="product-img-icon">🌿</span><span class="badge-eco">Eco</span></div><div class="product-body"><div class="product-category">Kain</div><div class="product-title">Gantungan kunci handmade</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★☆</span><span style="font-size:.75rem;color:var(--text-muted)">(4)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 20.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div></div></div>
-      </div>
+
+        <div class="col-sm-6 col-xl-4">
+          <div class="product-card">
+            <div class="product-img-wrap" style="background:#e8f5e9">
+              <span class="product-img-icon">🌸</span>
+              <span class="badge-eco">Eco</span>
+              <span class="badge-new">Terlaris</span>
+            </div>
+            <div class="product-body">
+              <div class="product-category">Kain</div>
+              <div class="product-title">Gantungan kunci bunga matahari</div>
+              <div class="d-flex align-items-center gap-1 mb-3">
+                <span style="color:#f59e0b;font-size:.8rem">★★★★★</span>
+                <span style="font-size:.75rem;color:var(--text-muted)">(8)</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="product-price">Rp 20.000</span>
+                <button class="btn-add-cart"
+                  data-id="1"
+                  data-name="Gantungan kunci bunga matahari"
+                  data-price="20000"
+                  data-cat="Kain"
+                  data-emoji="🌸"
+                  onclick="addToCart(this)">
+                  <i class="bi bi-bag-plus me-1"></i>Beli
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-4">
+          <div class="product-card">
+            <div class="product-img-wrap" style="background:#fff8e1">
+              <span class="product-img-icon">✏️</span>
+              <span class="badge-eco">Eco</span>
+            </div>
+            <div class="product-body">
+              <div class="product-category">Plastik</div>
+              <div class="product-title">Tempat pensil karakter</div>
+              <div class="d-flex align-items-center gap-1 mb-3">
+                <span style="color:#f59e0b;font-size:.8rem">★★★★☆</span>
+                <span style="font-size:.75rem;color:var(--text-muted)">(7)</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="product-price">Rp 15.000</span>
+                <button class="btn-add-cart"
+                  data-id="2"
+                  data-name="Tempat pensil karakter"
+                  data-price="15000"
+                  data-cat="Plastik"
+                  data-emoji="✏️"
+                  onclick="addToCart(this)">
+                  <i class="bi bi-bag-plus me-1"></i>Beli
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-4">
+          <div class="product-card">
+            <div class="product-img-wrap" style="background:#e3f2fd">
+              <span class="product-img-icon">💡</span>
+              <span class="badge-eco">Eco</span>
+              <span class="badge-new">Baru</span>
+            </div>
+            <div class="product-body">
+              <div class="product-category">Plastik</div>
+              <div class="product-title">Lampu hias</div>
+              <div class="d-flex align-items-center gap-1 mb-3">
+                <span style="color:#f59e0b;font-size:.8rem">★★★★★</span>
+                <span style="font-size:.75rem;color:var(--text-muted)">(15)</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="product-price">Rp 35.000</span>
+                <button class="btn-add-cart"
+                  data-id="3"
+                  data-name="Lampu hias"
+                  data-price="35000"
+                  data-cat="Plastik"
+                  data-emoji="💡"
+                  onclick="addToCart(this)">
+                  <i class="bi bi-bag-plus me-1"></i>Beli
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-4">
+          <div class="product-card">
+            <div class="product-img-wrap" style="background:#f3e5f5">
+              <span class="product-img-icon">🌿</span>
+              <span class="badge-eco">Eco</span>
+            </div>
+            <div class="product-body">
+              <div class="product-category">Kain</div>
+              <div class="product-title">Gantungan kunci handmade</div>
+              <div class="d-flex align-items-center gap-1 mb-3">
+                <span style="color:#f59e0b;font-size:.8rem">★★★★☆</span>
+                <span style="font-size:.75rem;color:var(--text-muted)">(4)</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="product-price">Rp 20.000</span>
+                <button class="btn-add-cart"
+                  data-id="4"
+                  data-name="Gantungan kunci handmade"
+                  data-price="20000"
+                  data-cat="Kain"
+                  data-emoji="🌿"
+                  onclick="addToCart(this)">
+                  <i class="bi bi-bag-plus me-1"></i>Beli
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /productGrid -->
 
       <!-- PAGINATION -->
       <div class="d-flex justify-content-center mt-5">
@@ -196,8 +546,6 @@
             <li class="page-item active"><a class="page-link" href="#" style="background:var(--green-dark);border-color:var(--green-dark);border-radius:8px">1</a></li>
             <li class="page-item"><a class="page-link" href="#" style="border-radius:8px;border:1.5px solid #e5e7eb">2</a></li>
             <li class="page-item"><a class="page-link" href="#" style="border-radius:8px;border:1.5px solid #e5e7eb">3</a></li>
-            <li class="page-item"><a class="page-link" href="#" style="border-radius:8px;border:1.5px solid #e5e7eb">4</a></li>
-            <li class="page-item"><a class="page-link" href="#" style="border-radius:8px;border:1.5px solid #e5e7eb">5</a></li>
             <li class="page-item"><a class="page-link" href="#" style="border-radius:8px;border:1.5px solid #e5e7eb">»</a></li>
           </ul>
         </nav>
@@ -206,12 +554,12 @@
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="container">
     <div class="row g-4">
       <div class="col-lg-4">
-        <div class="footer-brand mb-3">Recycle</span> Market</div>
+        <div class="footer-brand mb-3">Recycle <span>Market</span></div>
         <p style="font-size:.88rem;line-height:1.7;max-width:280px">Platform jual beli barang daur ulang terpercaya. Bersama kami, jadikan bumi lebih hijau.</p>
         <div class="d-flex gap-2 mt-3">
           <a class="social-btn" href="#"><i class="bi bi-instagram"></i></a>
@@ -238,7 +586,7 @@
         <div class="footer-heading">Kontak</div>
         <p style="font-size:.88rem;margin-bottom:.5rem"><i class="bi bi-geo-alt me-2"></i>Purwokerto, Jawa Tengah</p>
         <p style="font-size:.88rem;margin-bottom:.5rem"><i class="bi bi-telephone me-2"></i>+62 895-3850-29890</p>
-        <p style="font-size:.88rem"><i class="bi bi-envelope me-2"></i>recyclemarketplace234@gmail</p>
+        <p style="font-size:.88rem"><i class="bi bi-envelope me-2"></i>recyclemarketplace234@gmail.com</p>
       </div>
     </div>
     <hr class="footer-divider"/>
@@ -253,5 +601,189 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ─── CART STATE ───────────────────────────────────
+  let cart = []; // [{id, name, price, cat, emoji, qty}]
+
+  // ─── FORMAT RUPIAH ─────────────────────────────────
+  function rupiah(n) {
+    return 'Rp ' + n.toLocaleString('id-ID');
+  }
+
+  // ─── ADD TO CART ───────────────────────────────────
+  function addToCart(btn) {
+    const id    = btn.dataset.id;
+    const name  = btn.dataset.name;
+    const price = parseInt(btn.dataset.price);
+    const cat   = btn.dataset.cat;
+    const emoji = btn.dataset.emoji;
+
+    const existing = cart.find(i => i.id === id);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({ id, name, price, cat, emoji, qty: 1 });
+    }
+
+    updateCartUI();
+    showToast(`${emoji} ${name} ditambahkan!`);
+
+    // Visual feedback on button
+    const icon = btn.querySelector('i');
+    icon.className = 'bi bi-check-lg me-1';
+    btn.style.background = 'var(--green-light)';
+    setTimeout(() => {
+      icon.className = 'bi bi-bag-plus me-1';
+      btn.style.background = '';
+    }, 900);
+  }
+
+  // ─── CHANGE QTY ────────────────────────────────────
+  function changeQty(id, delta) {
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+    updateCartUI();
+  }
+
+  // ─── REMOVE ITEM ───────────────────────────────────
+  function removeItem(id) {
+    cart = cart.filter(i => i.id !== id);
+    updateCartUI();
+  }
+
+  // ─── CLEAR CART ────────────────────────────────────
+  function clearCart() {
+    cart = [];
+    updateCartUI();
+  }
+
+  // ─── UPDATE ALL UI ─────────────────────────────────
+  function updateCartUI() {
+    const total    = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+
+    // Badge
+    ['cartBadge','cartBadgeMobile'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = totalQty;
+      el.classList.toggle('visible', totalQty > 0);
+      if (totalQty > 0) { el.classList.add('bump'); setTimeout(() => el.classList.remove('bump'), 300); }
+    });
+
+    // Button text (desktop)
+    const btnText = document.getElementById('cartBtnText');
+    if (btnText) btnText.textContent = totalQty > 0 ? `(${totalQty})` : 'Keranjang';
+
+    // Cart body
+    const body   = document.getElementById('cartBody');
+    const footer = document.getElementById('cartFooter');
+
+    if (cart.length === 0) {
+      body.innerHTML = `
+        <div class="cart-empty">
+          <div class="cart-empty-icon">🛍️</div>
+          <p><strong>Keranjang masih kosong</strong></p>
+          <p style="font-size:.82rem">Tambahkan produk favoritmu dan mulai belanja!</p>
+        </div>`;
+      footer.style.display = 'none';
+    } else {
+      body.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <div class="cart-item-emoji">${item.emoji}</div>
+          <div class="cart-item-info">
+            <div class="cart-item-name" title="${item.name}">${item.name}</div>
+            <div class="cart-item-cat">${item.cat}</div>
+            <div class="cart-item-price">${rupiah(item.price * item.qty)}</div>
+            <div class="qty-control">
+              <button class="qty-btn" onclick="changeQty('${item.id}',-1)">−</button>
+              <span class="qty-val">${item.qty}</span>
+              <button class="qty-btn" onclick="changeQty('${item.id}',1)">+</button>
+              <span style="font-size:.75rem;color:var(--text-muted);margin-left:.3rem">× ${rupiah(item.price)}</span>
+            </div>
+          </div>
+          <button class="cart-item-remove" onclick="removeItem('${item.id}')" title="Hapus">
+            <i class="bi bi-trash3"></i>
+          </button>
+        </div>
+      `).join('');
+      footer.style.display = 'block';
+    }
+
+    // Totals
+    document.getElementById('cartSubtotal').textContent = rupiah(total);
+    document.getElementById('cartTotal').textContent    = rupiah(total);
+    document.getElementById('cartItemCount').textContent = totalQty;
+  }
+
+  // ─── CART DRAWER ───────────────────────────────────
+  function openCart() {
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCart() {
+    document.getElementById('cartDrawer').classList.remove('open');
+    document.getElementById('cartOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ─── CHECKOUT MODAL ────────────────────────────────
+  function openCheckout() {
+    if (cart.length === 0) return;
+    closeCart();
+
+    // Populate order list
+    document.getElementById('checkoutOrderList').innerHTML = cart.map(item => `
+      <div class="checkout-order-row">
+        <span>${item.emoji} ${item.name} ×${item.qty}</span>
+        <span style="font-weight:700">${rupiah(item.price * item.qty)}</span>
+      </div>
+    `).join('');
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    document.getElementById('checkoutTotal').textContent = rupiah(total);
+
+    // Reset to form view
+    document.getElementById('checkoutFormSection').style.display = 'block';
+    document.getElementById('checkoutSuccess').style.display = 'none';
+
+    document.getElementById('checkoutModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCheckout() {
+    document.getElementById('checkoutModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ─── CONFIRM ORDER ─────────────────────────────────
+  function confirmOrder() {
+    // Generate random order number
+    const num = '#RCM-' + String(Math.floor(10000 + Math.random() * 90000));
+    document.getElementById('orderNumber').textContent = num;
+
+    document.getElementById('checkoutFormSection').style.display = 'none';
+    document.getElementById('checkoutSuccess').style.display = 'block';
+  }
+
+  // ─── TOAST ─────────────────────────────────────────
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toastAdd');
+    t.textContent = '✅ ' + msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // ─── KEYBOARD ESC ──────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeCart(); closeCheckout(); }
+  });
+
+  // Init
+  updateCartUI();
+</script>
 </body>
 </html>
