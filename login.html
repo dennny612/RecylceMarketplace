@@ -280,7 +280,8 @@
     doc,
     setDoc,
     getDoc,
-    serverTimestamp
+    serverTimestamp,
+    enableIndexedDbPersistence
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   // ── Firebase Config ──
@@ -302,17 +303,21 @@
 
   // ── Helper: Redirect berdasarkan role ──
   async function redirectByRole(uid) {
-    const snap = await getDoc(doc(db, "users", uid));
-    if (snap.exists()) {
-      const role = snap.data().role;
-      if (role === "admin") {
-        window.location.href = "admin.html";
+    try {
+      const snap = await getDoc(doc(db, "users", uid));
+      if (snap.exists()) {
+        const role = snap.data().role;
+        if (role === "admin") {
+          window.location.href = "admin.html";
+        } else {
+          window.location.href = "index.html";
+        }
       } else {
-        window.location.href = "dashboard.html";
+        window.location.href = "index.html";
       }
-    } else {
-      // Jika doc belum ada (Google sign-in pertama kali sudah dibuat di bawah)
-      window.location.href = "dashboard.html";
+    } catch (err) {
+      console.warn("Firestore error saat redirect:", err.code, "→ fallback ke dashboard");
+      window.location.href = "index.html";
     }
   }
 
@@ -343,10 +348,11 @@
     try {
       const cred = await signInWithEmailAndPassword(auth, email, pwd);
       showSuccess('Login berhasil! Mengarahkan...');
+      setLoading('loginBtn','loginSpinner','loginBtnText','loginArrow', false);
       await redirectByRole(cred.user.uid);
     } catch (err) {
+      console.error('Login error:', err);
       showError(firebaseErrMsg(err.code));
-    } finally {
       setLoading('loginBtn','loginSpinner','loginBtnText','loginArrow', false);
     }
   };
@@ -403,7 +409,7 @@
       });
 
       showSuccess('Akun berhasil dibuat! Mengarahkan ke dashboard...');
-      setTimeout(() => { window.location.href = "dashboard.html"; }, 1500);
+      setTimeout(() => { window.location.href = "index.html"; }, 1500);
 
     } catch (err) {
       console.error('Register error:', err);
