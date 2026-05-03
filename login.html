@@ -8,43 +8,132 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    :root{--green-dark:#1a3d2b;--green-mid:#2d6a4f;--green-light:#52b788;--green-pale:#b7e4c7;--cream:#f4f1e8;--amber:#e9c46a;--white:#ffffff;--text-dark:#1c1c1e;--text-muted:#6b7280;}
-    *{box-sizing:border-box;}
-    body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,var(--green-dark) 0%,var(--green-mid) 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
+    :root{
+      --green-dark:#1a3d2b;
+      --green-mid:#2d6a4f;
+      --green-light:#52b788;
+      --green-pale:#b7e4c7;
+      --cream:#f4f1e8;
+      --amber:#e9c46a;
+      --white:#ffffff;
+      --text-dark:#1c1c1e;
+      --text-muted:#6b7280;
+      --danger:#dc2626;
+      --success:#16a34a;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family:'DM Sans',sans-serif;
+      background:linear-gradient(135deg,var(--green-dark) 0%,var(--green-mid) 100%);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:2rem;
+    }
     h1,h2,h3{font-family:'Playfair Display',serif;}
 
+    /* ── Card ── */
     .login-wrap{width:100%;max-width:480px;}
-    .login-card{background:var(--white);border-radius:24px;padding:2.8rem;box-shadow:0 20px 60px rgba(0,0,0,.3);width:100%;}
+    .login-card{
+      background:var(--white);
+      border-radius:24px;
+      padding:2.8rem;
+      box-shadow:0 20px 60px rgba(0,0,0,.3);
+    }
     .login-logo{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--green-dark);}
     .login-logo span{color:var(--green-light);}
 
+    /* ── Tab ── */
     .tab-toggle{display:flex;background:#f3f4f6;border-radius:12px;padding:4px;margin-bottom:2rem;}
-    .tab-btn{flex:1;padding:.6rem;border:none;background:transparent;border-radius:9px;font-size:.88rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all .2s;}
+    .tab-btn{
+      flex:1;padding:.6rem;border:none;background:transparent;
+      border-radius:9px;font-size:.88rem;font-weight:600;
+      color:var(--text-muted);cursor:pointer;transition:all .2s;
+    }
     .tab-btn.active{background:var(--white);color:var(--green-dark);box-shadow:0 1px 8px rgba(0,0,0,.1);}
 
-    .form-control-custom{border:2px solid #e5e7eb;border-radius:10px;padding:.75rem 1rem;font-size:.9rem;transition:all .2s;width:100%;}
+    /* ── Inputs ── */
+    .form-control-custom{
+      border:2px solid #e5e7eb;border-radius:10px;
+      padding:.75rem 1rem;font-size:.9rem;
+      transition:all .2s;width:100%;
+      font-family:'DM Sans',sans-serif;
+    }
     .form-control-custom:focus{border-color:var(--green-light);box-shadow:0 0 0 3px rgba(82,183,136,.15);outline:none;}
+    .form-control-custom.is-invalid{border-color:var(--danger);}
     .form-label-custom{font-weight:600;font-size:.85rem;margin-bottom:.4rem;display:block;color:var(--text-dark);}
+    .invalid-feedback-custom{color:var(--danger);font-size:.78rem;margin-top:.3rem;display:none;}
+    .invalid-feedback-custom.show{display:block;}
 
-    .btn-submit{background:var(--green-dark);color:var(--white);border:none;border-radius:10px;padding:.85rem;font-weight:700;font-size:.95rem;width:100%;transition:all .2s;cursor:pointer;}
+    /* ── Buttons ── */
+    .btn-submit{
+      background:var(--green-dark);color:var(--white);
+      border:none;border-radius:10px;padding:.85rem;
+      font-weight:700;font-size:.95rem;width:100%;
+      transition:all .2s;cursor:pointer;
+      font-family:'DM Sans',sans-serif;
+      display:flex;align-items:center;justify-content:center;gap:.5rem;
+    }
     .btn-submit:hover{background:var(--green-mid);transform:translateY(-1px);}
-    .btn-google{background:var(--white);color:var(--text-dark);border:2px solid #e5e7eb;border-radius:10px;padding:.75rem;font-weight:600;font-size:.88rem;width:100%;cursor:pointer;transition:all .2s;}
-    .btn-google:hover{border-color:var(--green-light);background:#f9fafb;}
+    .btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;}
 
+    .btn-google{
+      background:var(--white);color:var(--text-dark);
+      border:2px solid #e5e7eb;border-radius:10px;
+      padding:.75rem;font-weight:600;font-size:.88rem;
+      width:100%;cursor:pointer;transition:all .2s;
+      font-family:'DM Sans',sans-serif;
+      display:flex;align-items:center;justify-content:center;gap:.5rem;
+    }
+    .btn-google:hover{border-color:var(--green-light);background:#f9fafb;}
+    .btn-google:disabled{opacity:.6;cursor:not-allowed;}
+
+    /* ── Divider ── */
     .divider{display:flex;align-items:center;gap:.75rem;margin:1.2rem 0;}
     .divider::before,.divider::after{content:'';flex:1;height:1px;background:#e5e7eb;}
     .divider span{font-size:.78rem;color:var(--text-muted);}
 
-    .back-link{display:block;text-align:center;margin-top:1.5rem;color:rgba(255,255,255,.7);font-size:.85rem;text-decoration:none;transition:color .2s;}
-    .back-link:hover{color:var(--amber);}
+    /* ── Password ── */
+    .password-wrap{position:relative;}
+    .password-toggle{
+      position:absolute;right:12px;top:50%;transform:translateY(-50%);
+      background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1rem;
+      line-height:1;
+    }
 
+    /* ── Alerts ── */
+    .alert-custom{
+      border:none;border-radius:10px;font-size:.85rem;
+      padding:.75rem 1rem;margin-bottom:1rem;display:none;
+    }
+    .alert-custom.show{display:block;}
+    .alert-error{background:#fee2e2;color:#991b1b;}
+    .alert-success{background:#d8f3dc;color:var(--green-dark);}
+
+    /* ── Spinner ── */
+    .spinner{
+      width:16px;height:16px;border:2px solid rgba(255,255,255,.4);
+      border-top-color:#fff;border-radius:50%;
+      animation:spin .7s linear infinite;display:none;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── Sections ── */
     .form-section{display:none;}
     .form-section.active{display:block;}
 
-    .password-wrap{position:relative;}
-    .password-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1rem;}
+    .back-link{
+      display:block;text-align:center;margin-top:1.5rem;
+      color:rgba(255,255,255,.7);font-size:.85rem;
+      text-decoration:none;transition:color .2s;
+    }
+    .back-link:hover{color:var(--amber);}
 
-    .alert-success-custom{background:#d8f3dc;border:none;border-radius:10px;color:var(--green-dark);font-size:.88rem;padding:.75rem 1rem;}
+    /* Password strength */
+    .strength-bar{height:4px;border-radius:4px;margin-top:.4rem;transition:all .3s;background:#e5e7eb;}
+    .strength-bar .fill{height:100%;border-radius:4px;transition:all .3s;width:0;}
+    .strength-text{font-size:.75rem;margin-top:.2rem;}
   </style>
 </head>
 <body>
@@ -52,9 +141,13 @@
   <div class="login-card">
     <!-- Logo -->
     <div class="text-center mb-4">
-      <div class="login-logo">Recycle Marketplace</div>
+      <div class="login-logo">Recycle <span>Marketplace</span></div>
       <p style="color:var(--text-muted);font-size:.85rem;margin-top:.3rem">Platform Daur Ulang Terpercaya</p>
     </div>
+
+    <!-- Global Alert -->
+    <div class="alert-custom alert-error" id="globalAlert"></div>
+    <div class="alert-custom alert-success" id="globalSuccess"></div>
 
     <!-- Tab Toggle -->
     <div class="tab-toggle">
@@ -62,81 +155,415 @@
       <button class="tab-btn" id="btnRegister" onclick="switchTab('register')">Daftar</button>
     </div>
 
-    <!-- LOGIN FORM -->
+    <!-- ═══════════════ LOGIN FORM ═══════════════ -->
     <div class="form-section active" id="loginForm">
       <div class="mb-3">
         <label class="form-label-custom">Email</label>
-        <input type="email" class="form-control-custom" placeholder="contoh@email.com"/>
+        <input type="email" class="form-control-custom" id="loginEmail" placeholder="contoh@email.com"/>
+        <div class="invalid-feedback-custom" id="loginEmailErr"></div>
       </div>
       <div class="mb-1">
         <label class="form-label-custom">Kata Sandi</label>
         <div class="password-wrap">
-          <input type="password" class="form-control-custom" id="pwd1" placeholder="••••••••"/>
-          <button class="password-toggle" onclick="togglePwd('pwd1','ic1')"><i class="bi bi-eye" id="ic1"></i></button>
+          <input type="password" class="form-control-custom" id="loginPwd" placeholder="••••••••"/>
+          <button class="password-toggle" type="button" onclick="togglePwd('loginPwd','icLogin')">
+            <i class="bi bi-eye" id="icLogin"></i>
+          </button>
         </div>
+        <div class="invalid-feedback-custom" id="loginPwdErr"></div>
       </div>
-      <div class="text-end mb-3"><a href="#" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Lupa kata sandi?</a></div>
-      <button class="btn-submit mb-3" onclick="window.location.href='admin.html'">Masuk <i class="bi bi-arrow-right ms-1"></i></button>
+      <div class="text-end mb-3">
+        <a href="#" id="forgotLink" style="font-size:.8rem;color:var(--green-mid);text-decoration:none">Lupa kata sandi?</a>
+      </div>
+
+      <button class="btn-submit mb-3" id="loginBtn" onclick="handleLogin()">
+        <span id="loginBtnText">Masuk</span>
+        <div class="spinner" id="loginSpinner"></div>
+        <i class="bi bi-arrow-right" id="loginArrow"></i>
+      </button>
+
       <div class="divider"><span>atau masuk dengan</span></div>
-      <button class="btn-google"><i class="bi bi-google me-2" style="color:#ea4335"></i>Google</button>
-      <p class="text-center mt-3" style="font-size:.85rem;color:var(--text-muted)">Belum punya akun? <a onclick="switchTab('register')" style="color:var(--green-mid);font-weight:600;cursor:pointer">Daftar sekarang</a></p>
+
+      <button class="btn-google" id="googleLoginBtn" onclick="handleGoogleLogin()">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#EA4335" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#4285F4" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#34A853" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z"/></svg>
+        Masuk dengan Google
+      </button>
+
+      <p class="text-center mt-3" style="font-size:.85rem;color:var(--text-muted)">
+        Belum punya akun?
+        <a onclick="switchTab('register')" style="color:var(--green-mid);font-weight:600;cursor:pointer">Daftar sekarang</a>
+      </p>
     </div>
 
-    <!-- REGISTER FORM -->
+    <!-- ═══════════════ REGISTER FORM ═══════════════ -->
     <div class="form-section" id="registerForm">
       <div class="row g-3">
         <div class="col-6">
           <label class="form-label-custom">Nama Depan</label>
-          <input type="text" class="form-control-custom" placeholder="Nama Depan"/>
+          <input type="text" class="form-control-custom" id="regFirstName" placeholder="Nama Depan"/>
+          <div class="invalid-feedback-custom" id="regFirstNameErr"></div>
         </div>
         <div class="col-6">
           <label class="form-label-custom">Nama Belakang</label>
-          <input type="text" class="form-control-custom" placeholder="Nama Belakang"/>
+          <input type="text" class="form-control-custom" id="regLastName" placeholder="Nama Belakang"/>
+          <div class="invalid-feedback-custom" id="regLastNameErr"></div>
         </div>
         <div class="col-12">
           <label class="form-label-custom">Email</label>
-          <input type="email" class="form-control-custom" placeholder="....@email.com"/>
+          <input type="email" class="form-control-custom" id="regEmail" placeholder="....@email.com"/>
+          <div class="invalid-feedback-custom" id="regEmailErr"></div>
         </div>
         <div class="col-12">
           <label class="form-label-custom">Kata Sandi</label>
           <div class="password-wrap">
-            <input type="password" class="form-control-custom" id="pwd2" placeholder="Min. 8 karakter"/>
-            <button class="password-toggle" onclick="togglePwd('pwd2','ic2')"><i class="bi bi-eye" id="ic2"></i></button>
+            <input type="password" class="form-control-custom" id="regPwd" placeholder="Min. 8 karakter" oninput="checkStrength(this.value)"/>
+            <button class="password-toggle" type="button" onclick="togglePwd('regPwd','icReg')">
+              <i class="bi bi-eye" id="icReg"></i>
+            </button>
           </div>
+          <div class="strength-bar"><div class="fill" id="strengthFill"></div></div>
+          <div class="strength-text" id="strengthText" style="color:var(--text-muted)"></div>
+          <div class="invalid-feedback-custom" id="regPwdErr"></div>
         </div>
         <div class="col-12">
           <label class="form-label-custom">Konfirmasi Kata Sandi</label>
-          <input type="password" class="form-control-custom" placeholder="Ulangi kata sandi"/>
+          <div class="password-wrap">
+            <input type="password" class="form-control-custom" id="regPwdConfirm" placeholder="Ulangi kata sandi"/>
+            <button class="password-toggle" type="button" onclick="togglePwd('regPwdConfirm','icRegC')">
+              <i class="bi bi-eye" id="icRegC"></i>
+            </button>
+          </div>
+          <div class="invalid-feedback-custom" id="regPwdConfirmErr"></div>
         </div>
         <div class="col-12">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="agree"/>
-            <label class="form-check-label" for="agree" style="font-size:.82rem;color:var(--text-muted)">Saya setuju dengan <a href="#" style="color:var(--green-mid)">Syarat & Ketentuan</a> dan <a href="#" style="color:var(--green-mid)">Kebijakan Privasi</a></label>
+            <label class="form-check-label" for="agree" style="font-size:.82rem;color:var(--text-muted)">
+              Saya setuju dengan
+              <a href="#" style="color:var(--green-mid)">Syarat &amp; Ketentuan</a> dan
+              <a href="#" style="color:var(--green-mid)">Kebijakan Privasi</a>
+            </label>
           </div>
+          <div class="invalid-feedback-custom" id="agreeErr"></div>
         </div>
         <div class="col-12">
-          <button class="btn-submit">Buat Akun <i class="bi bi-arrow-right ms-1"></i></button>
+          <button class="btn-submit" id="registerBtn" onclick="handleRegister()">
+            <span id="registerBtnText">Buat Akun</span>
+            <div class="spinner" id="registerSpinner"></div>
+            <i class="bi bi-arrow-right" id="registerArrow"></i>
+          </button>
         </div>
       </div>
-      <p class="text-center mt-3" style="font-size:.85rem;color:var(--text-muted)">Sudah punya akun? <a onclick="switchTab('login')" style="color:var(--green-mid);font-weight:600;cursor:pointer">Masuk di sini</a></p>
+      <p class="text-center mt-3" style="font-size:.85rem;color:var(--text-muted)">
+        Sudah punya akun?
+        <a onclick="switchTab('login')" style="color:var(--green-mid);font-weight:600;cursor:pointer">Masuk di sini</a>
+      </p>
     </div>
   </div>
   <a class="back-link" href="index.html"><i class="bi bi-arrow-left me-1"></i>Kembali ke Beranda</a>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- ═══════════════ FIREBASE SDK ═══════════════ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider,
+    sendPasswordResetEmail,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  // ── Firebase Config ──
+  const firebaseConfig = {
+    apiKey: "AIzaSyBhE0M_0JOzs5RdSllOcNGTID4WjHee1t4",
+    authDomain: "recyclemarketplaceweb.firebaseapp.com",
+    databaseURL: "https://recyclemarketplaceweb-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "recyclemarketplaceweb",
+    storageBucket: "recyclemarketplaceweb.firebasestorage.app",
+    messagingSenderId: "856529277069",
+    appId: "1:856529277069:web:604cb6bddb1e754bef92c4",
+    measurementId: "G-QXNFTCN8J7"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+  const googleProvider = new GoogleAuthProvider();
+
+  // ── Helper: Redirect berdasarkan role ──
+  async function redirectByRole(uid) {
+    const snap = await getDoc(doc(db, "users", uid));
+    if (snap.exists()) {
+      const role = snap.data().role;
+      if (role === "admin") {
+        window.location.href = "admin.html";
+      } else {
+        window.location.href = "dashboard.html";
+      }
+    } else {
+      // Jika doc belum ada (Google sign-in pertama kali sudah dibuat di bawah)
+      window.location.href = "dashboard.html";
+    }
+  }
+
+  // ── Helper: Simpan user ke Firestore ──
+  async function saveUserToFirestore(uid, data) {
+    await setDoc(doc(db, "users", uid), data, { merge: true });
+  }
+
+  // ══════════════════════════════════════
+  //  LOGIN dengan Email & Password
+  // ══════════════════════════════════════
+  window.handleLogin = async function() {
+    clearAlerts();
+    const email = document.getElementById('loginEmail').value.trim();
+    const pwd   = document.getElementById('loginPwd').value;
+    let valid = true;
+
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      showFieldErr('loginEmail','loginEmailErr','Masukkan email yang valid'); valid = false;
+    }
+    if (!pwd) {
+      showFieldErr('loginPwd','loginPwdErr','Masukkan kata sandi'); valid = false;
+    }
+    if (!valid) return;
+
+    setLoading('loginBtn','loginSpinner','loginBtnText','loginArrow', true);
+
+    try {
+      const cred = await signInWithEmailAndPassword(auth, email, pwd);
+      showSuccess('Login berhasil! Mengarahkan...');
+      await redirectByRole(cred.user.uid);
+    } catch (err) {
+      showError(firebaseErrMsg(err.code));
+    } finally {
+      setLoading('loginBtn','loginSpinner','loginBtnText','loginArrow', false);
+    }
+  };
+
+  // ══════════════════════════════════════
+  //  REGISTER dengan Email & Password
+  // ══════════════════════════════════════
+  window.handleRegister = async function() {
+    clearAlerts();
+    const firstName = document.getElementById('regFirstName').value.trim();
+    const lastName  = document.getElementById('regLastName').value.trim();
+    const email     = document.getElementById('regEmail').value.trim();
+    const pwd       = document.getElementById('regPwd').value;
+    const pwdC      = document.getElementById('regPwdConfirm').value;
+    const agreed    = document.getElementById('agree').checked;
+    let valid = true;
+
+    if (!firstName) { showFieldErr('regFirstName','regFirstNameErr','Nama depan wajib diisi'); valid=false; }
+    if (!lastName)  { showFieldErr('regLastName','regLastNameErr','Nama belakang wajib diisi'); valid=false; }
+    if (!email || !/\S+@\S+\.\S+/.test(email)) { showFieldErr('regEmail','regEmailErr','Email tidak valid'); valid=false; }
+    if (pwd.length < 8) { showFieldErr('regPwd','regPwdErr','Kata sandi min. 8 karakter'); valid=false; }
+    if (pwd !== pwdC)   { showFieldErr('regPwdConfirm','regPwdConfirmErr','Kata sandi tidak cocok'); valid=false; }
+    if (!agreed) { showFieldErr(null,'agreeErr','Harap setujui syarat & ketentuan'); valid=false; }
+    if (!valid) return;
+
+    setLoading('registerBtn','registerSpinner','registerBtnText','registerArrow', true);
+
+    try {
+      // 1. Buat akun di Firebase Auth
+      const cred = await createUserWithEmailAndPassword(auth, email, pwd);
+
+      // 2. Update display name
+      await updateProfile(cred.user, { displayName: `${firstName} ${lastName}` });
+
+      // 3. Simpan data lengkap ke Firestore
+      await saveUserToFirestore(cred.user.uid, {
+        uid:        cred.user.uid,
+        firstName:  firstName,
+        lastName:   lastName,
+        fullName:   `${firstName} ${lastName}`,
+        email:      email,
+        role:       "user",          // Default role = user
+        createdAt:  serverTimestamp(),
+        provider:   "email"
+      });
+
+      showSuccess('Akun berhasil dibuat! Mengarahkan ke dashboard...');
+      setTimeout(() => { window.location.href = "dashboard.html"; }, 1500);
+
+    } catch (err) {
+      showError(firebaseErrMsg(err.code));
+    } finally {
+      setLoading('registerBtn','registerSpinner','registerBtnText','registerArrow', false);
+    }
+  };
+
+  // ══════════════════════════════════════
+  //  GOOGLE Sign-In
+  // ══════════════════════════════════════
+  window.handleGoogleLogin = async function() {
+    clearAlerts();
+    document.getElementById('googleLoginBtn').disabled = true;
+
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user   = result.user;
+
+      // Cek apakah user sudah punya doc di Firestore
+      const snap = await getDoc(doc(db, "users", user.uid));
+
+      if (!snap.exists()) {
+        // User baru — simpan ke Firestore
+        const nameParts = (user.displayName || "").split(" ");
+        await saveUserToFirestore(user.uid, {
+          uid:        user.uid,
+          firstName:  nameParts[0] || "",
+          lastName:   nameParts.slice(1).join(" ") || "",
+          fullName:   user.displayName || "",
+          email:      user.email,
+          role:       "user",
+          createdAt:  serverTimestamp(),
+          provider:   "google",
+          photoURL:   user.photoURL || ""
+        });
+      }
+
+      showSuccess('Login berhasil! Mengarahkan...');
+      await redirectByRole(user.uid);
+
+    } catch (err) {
+      if (err.code !== 'auth/popup-closed-by-user') {
+        showError(firebaseErrMsg(err.code));
+      }
+    } finally {
+      document.getElementById('googleLoginBtn').disabled = false;
+    }
+  };
+
+  // ══════════════════════════════════════
+  //  LUPA KATA SANDI
+  // ══════════════════════════════════════
+  document.getElementById('forgotLink').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      showFieldErr('loginEmail','loginEmailErr','Masukkan email Anda terlebih dahulu');
+      return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, email);
+      showSuccess(`Email reset kata sandi dikirim ke ${email}`);
+    } catch (err) {
+      showError(firebaseErrMsg(err.code));
+    }
+  });
+
+  // ── Firebase error messages (Bahasa Indonesia) ──
+  function firebaseErrMsg(code) {
+    const msgs = {
+      'auth/invalid-email':            'Format email tidak valid.',
+      'auth/user-disabled':            'Akun ini telah dinonaktifkan.',
+      'auth/user-not-found':           'Akun tidak ditemukan. Silakan daftar terlebih dahulu.',
+      'auth/wrong-password':           'Kata sandi salah. Coba lagi.',
+      'auth/invalid-credential':       'Email atau kata sandi salah.',
+      'auth/email-already-in-use':     'Email sudah terdaftar. Silakan masuk.',
+      'auth/weak-password':            'Kata sandi terlalu lemah (min. 8 karakter).',
+      'auth/network-request-failed':   'Koneksi gagal. Periksa internet Anda.',
+      'auth/too-many-requests':        'Terlalu banyak percobaan. Coba lagi nanti.',
+      'auth/popup-blocked':            'Pop-up diblokir browser. Izinkan pop-up untuk login Google.',
+    };
+    return msgs[code] || `Terjadi kesalahan: ${code}`;
+  }
+</script>
+
+<!-- ═══════════════ UTILITY JS ═══════════════ -->
 <script>
   function switchTab(tab) {
     document.getElementById('loginForm').classList.toggle('active', tab === 'login');
     document.getElementById('registerForm').classList.toggle('active', tab === 'register');
     document.getElementById('btnLogin').classList.toggle('active', tab === 'login');
     document.getElementById('btnRegister').classList.toggle('active', tab === 'register');
+    clearAlerts();
   }
+
   function togglePwd(inputId, iconId) {
     const input = document.getElementById(inputId);
-    const icon = document.getElementById(iconId);
-    if (input.type === 'password') { input.type = 'text'; icon.classList.replace('bi-eye','bi-eye-slash'); }
-    else { input.type = 'password'; icon.classList.replace('bi-eye-slash','bi-eye'); }
+    const icon  = document.getElementById(iconId);
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.replace('bi-eye','bi-eye-slash');
+    } else {
+      input.type = 'password';
+      icon.classList.replace('bi-eye-slash','bi-eye');
+    }
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('globalAlert');
+    el.innerHTML = `<i class="bi bi-exclamation-circle me-2"></i>${msg}`;
+    el.classList.add('show');
+  }
+
+  function showSuccess(msg) {
+    const el = document.getElementById('globalSuccess');
+    el.innerHTML = `<i class="bi bi-check-circle me-2"></i>${msg}`;
+    el.classList.add('show');
+  }
+
+  function clearAlerts() {
+    document.getElementById('globalAlert').classList.remove('show');
+    document.getElementById('globalSuccess').classList.remove('show');
+    // Clear field errors
+    document.querySelectorAll('.form-control-custom').forEach(el => el.classList.remove('is-invalid'));
+    document.querySelectorAll('.invalid-feedback-custom').forEach(el => {
+      el.classList.remove('show'); el.textContent = '';
+    });
+  }
+
+  function showFieldErr(inputId, errId, msg) {
+    if (inputId) document.getElementById(inputId)?.classList.add('is-invalid');
+    const errEl = document.getElementById(errId);
+    if (errEl) { errEl.textContent = msg; errEl.classList.add('show'); }
+  }
+
+  function setLoading(btnId, spinnerId, textId, arrowId, loading) {
+    const btn     = document.getElementById(btnId);
+    const spinner = document.getElementById(spinnerId);
+    const text    = document.getElementById(textId);
+    const arrow   = document.getElementById(arrowId);
+    btn.disabled         = loading;
+    spinner.style.display = loading ? 'block' : 'none';
+    arrow.style.display   = loading ? 'none'  : 'inline';
+    text.textContent      = loading ? 'Memproses...' : (btnId === 'loginBtn' ? 'Masuk' : 'Buat Akun');
+  }
+
+  // Password strength checker
+  function checkStrength(pwd) {
+    const fill = document.getElementById('strengthFill');
+    const text = document.getElementById('strengthText');
+    let score = 0;
+    if (pwd.length >= 8)           score++;
+    if (/[A-Z]/.test(pwd))         score++;
+    if (/[0-9]/.test(pwd))         score++;
+    if (/[^A-Za-z0-9]/.test(pwd))  score++;
+
+    const levels = [
+      { pct:'0%',   color:'#e5e7eb', label:'' },
+      { pct:'25%',  color:'#dc2626', label:'Sangat lemah' },
+      { pct:'50%',  color:'#f97316', label:'Lemah' },
+      { pct:'75%',  color:'#eab308', label:'Cukup kuat' },
+      { pct:'100%', color:'#16a34a', label:'Kuat' },
+    ];
+    const lvl = levels[score];
+    fill.style.width      = lvl.pct;
+    fill.style.background = lvl.color;
+    text.textContent      = lvl.label;
+    text.style.color      = lvl.color;
   }
 </script>
 </body>
