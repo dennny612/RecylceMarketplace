@@ -17,25 +17,43 @@
     body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);scroll-behavior:smooth;}
     h1,h2,h3,h4{font-family:'Playfair Display',serif;}
 
-    /* NAVBAR */
+    /* ═══ NAVBAR ═══ */
     .navbar-custom{background:var(--green-dark);padding:.9rem 0;position:sticky;top:0;z-index:1050;box-shadow:0 2px 20px rgba(0,0,0,.2);}
-    .navbar-brand-text{font-family:'Playfair Display',Roboto;font-size:1.6rem;font-weight:900;color:var(--green-pale)!important;letter-spacing:-.5px;text-decoration:none;}
+    .navbar-brand-text{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--green-pale)!important;letter-spacing:-.5px;text-decoration:none;}
     .navbar-brand-text span{color:var(--amber);}
     .nav-link-custom{color:rgba(255,255,255,.82)!important;font-weight:500;font-size:.88rem;padding:.4rem .9rem!important;border-radius:6px;transition:all .2s;text-decoration:none;}
     .nav-link-custom:hover,.nav-link-custom.active{color:var(--amber)!important;background:rgba(255,255,255,.07);}
     .btn-nav-login{background:var(--green-light);color:var(--white)!important;border-radius:50px;padding:.38rem 1.1rem!important;font-weight:600;font-size:.85rem;transition:all .2s;}
     .btn-nav-login:hover{background:var(--amber);color:var(--green-dark)!important;}
 
-    /* HERO */
+    /* ─── ORDER BUTTON in Navbar ─── */
+    .order-nav-btn{
+      position:relative;background:rgba(255,255,255,.12);
+      border:1.5px solid rgba(255,255,255,.25);color:var(--white);
+      border-radius:50px;padding:.38rem 1rem;font-size:.88rem;font-weight:600;
+      cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:.4rem;
+      text-decoration:none;
+    }
+    .order-nav-btn:hover{background:var(--amber);border-color:var(--amber);color:var(--green-dark)!important;}
+    .order-nav-badge{
+      position:absolute;top:-6px;right:-6px;
+      background:#ef4444;color:white;font-size:.6rem;font-weight:800;
+      min-width:18px;height:18px;border-radius:50px;
+      display:flex;align-items:center;justify-content:center;
+      border:2px solid var(--green-dark);transition:all .2s;transform:scale(0);
+    }
+    .order-nav-badge.visible{transform:scale(1);}
+
+    /* ═══ HERO ═══ */
     .hero-section{background:linear-gradient(135deg,var(--green-dark) 0%,var(--green-mid) 60%,var(--green-light) 100%);min-height:92vh;display:flex;align-items:center;position:relative;overflow:hidden;}
     .hero-section::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");}
     .hero-badge{display:inline-block;background:rgba(233,196,106,.2);border:1px solid var(--amber);color:var(--amber);font-size:.78rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:.35rem 1rem;border-radius:50px;margin-bottom:1.2rem;}
     .hero-title{font-size:clamp(2.6rem,6vw,4.5rem);color:var(--white);line-height:1.1;margin-bottom:1.4rem;}
     .hero-title .highlight{color:var(--amber);}
     .hero-desc{color:rgba(255,255,255,.78);font-size:1.05rem;line-height:1.7;max-width:520px;margin-bottom:2rem;}
-    .btn-hero-primary{background:var(--amber);color:var(--green-dark);font-weight:700;padding:.85rem 2rem;border-radius:50px;font-size:.95rem;border:none;transition:all .25s;box-shadow:0 4px 20px rgba(233,196,106,.4);cursor:pointer;}
-    .btn-hero-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(233,196,106,.5);background:#f4d06f;}
-    .btn-hero-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.5);font-weight:600;padding:.85rem 2rem;border-radius:50px;font-size:.95rem;transition:all .25s;cursor:pointer;}
+    .btn-hero-primary{background:var(--amber);color:var(--green-dark);font-weight:700;padding:.85rem 2rem;border-radius:50px;font-size:.95rem;border:none;transition:all .25s;box-shadow:0 4px 20px rgba(233,196,106,.4);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;}
+    .btn-hero-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(233,196,106,.5);background:#f4d06f;color:var(--green-dark);}
+    .btn-hero-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.5);font-weight:600;padding:.85rem 2rem;border-radius:50px;font-size:.95rem;transition:all .25s;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;}
     .btn-hero-outline:hover{border-color:var(--white);background:rgba(255,255,255,.1);color:var(--white);}
     .hero-stats{display:flex;gap:2.5rem;margin-top:2.5rem;}
     .hero-stat-num{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--amber);line-height:1;}
@@ -45,7 +63,7 @@
     .hero-card-float:nth-child(3){animation-delay:-1s;}
     @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 
-    /* SECTION */
+    /* ═══ SECTIONS ═══ */
     .section-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--green-mid);margin-bottom:.5rem;display:block;}
     .section-title{font-size:clamp(1.9rem,4vw,2.8rem);color:var(--green-dark);margin-bottom:.8rem;line-height:1.2;}
     .section-divider{width:50px;height:4px;background:var(--green-light);border-radius:10px;margin:0 auto 1.5rem;}
@@ -66,8 +84,8 @@
     .product-category{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-light);font-weight:700;margin-bottom:.3rem;}
     .product-title{font-size:.95rem;font-weight:600;margin-bottom:.5rem;}
     .product-price{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--green-dark);}
-    .btn-add-cart{background:var(--green-dark);color:var(--white);border:none;border-radius:50px;padding:.45rem 1.2rem;font-size:.82rem;font-weight:600;transition:all .2s;cursor:pointer;}
-    .btn-add-cart:hover{background:var(--green-light);}
+    .btn-add-cart{background:var(--green-dark);color:var(--white);border:none;border-radius:50px;padding:.45rem 1.2rem;font-size:.82rem;font-weight:600;transition:all .2s;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;}
+    .btn-add-cart:hover{background:var(--green-light);color:var(--white);}
 
     /* NEWS */
     .news-card{background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07);transition:all .3s;height:100%;}
@@ -77,7 +95,199 @@
     .news-title{font-size:1rem;font-weight:600;line-height:1.4;margin-bottom:.5rem;}
     .news-meta{font-size:.78rem;color:var(--text-muted);}
 
-    /* FOOTER */
+    /* ═══════════════════════════════════════════════════
+       PESANAN SAYA — OVERLAY & DRAWER
+    ═══════════════════════════════════════════════════ */
+    .orders-overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1200;
+      opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px);
+    }
+    .orders-overlay.open{opacity:1;pointer-events:all;}
+
+    .orders-drawer{
+      position:fixed;top:0;right:0;width:100%;max-width:520px;height:100vh;
+      background:var(--cream);z-index:1300;display:flex;flex-direction:column;
+      transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.2,1);
+      box-shadow:-12px 0 50px rgba(0,0,0,.18);
+    }
+    .orders-drawer.open{transform:translateX(0);}
+
+    /* Drawer header */
+    .orders-header{
+      background:linear-gradient(135deg,var(--green-dark),var(--green-mid));
+      padding:1.4rem 1.6rem;flex-shrink:0;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .orders-header-left h5{
+      font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;
+      color:var(--white);margin:0;
+    }
+    .orders-header-left p{font-size:.75rem;color:rgba(255,255,255,.65);margin:.15rem 0 0;}
+    .orders-close{
+      background:rgba(255,255,255,.15);border:none;color:white;
+      width:36px;height:36px;border-radius:50%;font-size:1.1rem;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:all .2s;
+    }
+    .orders-close:hover{background:rgba(255,255,255,.3);}
+
+    /* Tabs */
+    .orders-tabs{
+      display:flex;background:var(--white);border-bottom:2px solid #e5e7eb;
+      flex-shrink:0;overflow-x:auto;
+    }
+    .orders-tabs::-webkit-scrollbar{display:none;}
+    .orders-tab{
+      flex:1;min-width:80px;padding:.7rem .5rem;font-size:.78rem;font-weight:700;
+      text-align:center;cursor:pointer;color:var(--text-muted);
+      border-bottom:2.5px solid transparent;margin-bottom:-2px;
+      transition:all .2s;white-space:nowrap;
+    }
+    .orders-tab:hover{color:var(--green-mid);}
+    .orders-tab.active{color:var(--green-dark);border-bottom-color:var(--green-dark);}
+    .orders-tab .tab-count{
+      display:inline-block;background:#e5e7eb;color:var(--text-muted);
+      font-size:.62rem;padding:.1rem .4rem;border-radius:20px;margin-left:.3rem;
+    }
+    .orders-tab.active .tab-count{background:var(--green-dark);color:white;}
+
+    /* Body */
+    .orders-body{flex:1;overflow-y:auto;padding:1.2rem 1.4rem;}
+    .orders-body::-webkit-scrollbar{width:4px;}
+    .orders-body::-webkit-scrollbar-track{background:transparent;}
+    .orders-body::-webkit-scrollbar-thumb{background:var(--green-pale);border-radius:4px;}
+
+    /* ─── Order Card ─── */
+    .order-card{
+      background:var(--white);border-radius:16px;
+      box-shadow:0 2px 12px rgba(0,0,0,.07);
+      margin-bottom:1rem;overflow:hidden;
+      transition:box-shadow .2s;
+    }
+    .order-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.12);}
+
+    .order-card-header{
+      padding:.85rem 1.1rem;display:flex;align-items:center;
+      justify-content:space-between;border-bottom:1px solid #f3f4f6;
+    }
+    .order-id{font-size:.72rem;font-weight:700;color:var(--green-mid);letter-spacing:.5px;}
+    .order-date{font-size:.7rem;color:var(--text-muted);}
+
+    /* Status badges */
+    .status-badge{
+      font-size:.68rem;font-weight:700;letter-spacing:.5px;
+      text-transform:uppercase;padding:.28rem .7rem;border-radius:20px;
+    }
+    .status-pending   {background:#fef9c3;color:#854d0e;}
+    .status-process   {background:#dbeafe;color:#1e40af;}
+    .status-shipping  {background:#e0f2fe;color:#0369a1;}
+    .status-delivered {background:#dcfce7;color:#15803d;}
+    .status-cancelled {background:#fee2e2;color:#b91c1c;}
+
+    /* Items inside order */
+    .order-items{padding:.85rem 1.1rem;display:flex;flex-direction:column;gap:.6rem;}
+    .order-item-row{display:flex;align-items:center;gap:.8rem;}
+    .order-item-emoji{
+      width:44px;height:44px;background:var(--cream);border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.4rem;flex-shrink:0;border:1px solid #e5e7eb;
+    }
+    .order-item-name{font-size:.83rem;font-weight:600;color:var(--text-dark);flex:1;}
+    .order-item-qty{font-size:.75rem;color:var(--text-muted);margin-top:.1rem;}
+    .order-item-price{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--green-dark);white-space:nowrap;}
+
+    /* More items pill */
+    .more-items-pill{
+      display:inline-flex;align-items:center;gap:.3rem;
+      background:#f3f4f6;border-radius:20px;
+      font-size:.72rem;color:var(--text-muted);
+      padding:.2rem .65rem;margin-top:.2rem;cursor:pointer;
+      transition:all .15s;
+    }
+    .more-items-pill:hover{background:var(--green-pale);color:var(--green-dark);}
+
+    /* Order footer */
+    .order-card-footer{
+      padding:.85rem 1.1rem;background:#fafafa;border-top:1px solid #f3f4f6;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem;
+    }
+    .order-total-label{font-size:.75rem;color:var(--text-muted);}
+    .order-total-val{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:var(--green-dark);}
+
+    /* Action buttons */
+    .order-actions{display:flex;gap:.5rem;flex-wrap:wrap;}
+    .btn-order-action{
+      font-size:.75rem;font-weight:600;border-radius:20px;
+      padding:.35rem .85rem;cursor:pointer;transition:all .2s;border:1.5px solid;
+      display:flex;align-items:center;gap:.3rem;
+    }
+    .btn-reorder{background:var(--green-dark);color:white;border-color:var(--green-dark);}
+    .btn-reorder:hover{background:var(--green-mid);}
+    .btn-track{background:transparent;color:var(--green-dark);border-color:var(--green-pale);}
+    .btn-track:hover{background:var(--green-pale);}
+    .btn-review{background:transparent;color:#f59e0b;border-color:#fde68a;}
+    .btn-review:hover{background:#fef9c3;}
+    .btn-cancel{background:transparent;color:#ef4444;border-color:#fecaca;}
+    .btn-cancel:hover{background:#fee2e2;}
+
+    /* Tracking timeline */
+    .tracking-panel{
+      max-height:0;overflow:hidden;transition:max-height .35s ease;
+      background:#f9fafb;border-top:1px dashed #e5e7eb;
+    }
+    .tracking-panel.open{max-height:300px;}
+    .tracking-inner{padding:1rem 1.1rem;}
+    .track-step{display:flex;gap:.85rem;position:relative;padding-bottom:.9rem;}
+    .track-step:last-child{padding-bottom:0;}
+    .track-step::before{content:'';position:absolute;left:10px;top:22px;bottom:0;width:2px;background:#e5e7eb;}
+    .track-step:last-child::before{display:none;}
+    .track-dot{
+      width:22px;height:22px;border-radius:50%;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;font-size:.7rem;
+      position:relative;z-index:1;
+    }
+    .track-dot.done{background:var(--green-dark);color:white;}
+    .track-dot.current{background:var(--amber);color:var(--green-dark);box-shadow:0 0 0 4px rgba(233,196,106,.3);}
+    .track-dot.pending{background:#e5e7eb;color:#9ca3af;}
+    .track-info h6{font-size:.8rem;font-weight:700;color:var(--text-dark);margin:0 0 .1rem;}
+    .track-info p{font-size:.72rem;color:var(--text-muted);margin:0;}
+
+    /* Empty state */
+    .orders-empty{
+      text-align:center;padding:3.5rem 1.5rem;
+    }
+    .orders-empty-icon{font-size:4.5rem;margin-bottom:1rem;opacity:.35;}
+    .orders-empty h6{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green-dark);margin-bottom:.5rem;}
+    .orders-empty p{font-size:.85rem;color:var(--text-muted);max-width:240px;margin:0 auto 1.5rem;}
+    .btn-shop-now{
+      background:var(--green-dark);color:white;border:none;
+      border-radius:50px;padding:.7rem 1.8rem;font-size:.85rem;font-weight:700;
+      cursor:pointer;transition:all .2s;
+    }
+    .btn-shop-now:hover{background:var(--green-mid);}
+
+    /* Summary bar */
+    .orders-summary{
+      background:var(--white);border-bottom:1px solid #e5e7eb;
+      padding:.75rem 1.4rem;flex-shrink:0;
+      display:flex;gap:1.5rem;overflow-x:auto;
+    }
+    .orders-summary::-webkit-scrollbar{display:none;}
+    .sum-stat{text-align:center;flex-shrink:0;}
+    .sum-stat-num{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--green-dark);line-height:1;}
+    .sum-stat-label{font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-top:.15rem;}
+
+    /* Toast */
+    .toast-orders{
+      position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);
+      background:var(--green-dark);color:white;padding:.65rem 1.3rem;
+      border-radius:50px;font-size:.85rem;font-weight:600;z-index:1400;
+      opacity:0;transition:all .3s;white-space:nowrap;pointer-events:none;
+      box-shadow:0 4px 20px rgba(0,0,0,.3);
+    }
+    .toast-orders.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+    /* ═══ FOOTER ═══ */
     .footer{background:var(--green-dark);color:rgba(255,255,255,.75);padding:60px 0 30px;}
     .footer-brand{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--green-pale);}
     .footer-brand span{color:var(--amber);}
@@ -88,27 +298,49 @@
     .social-btn{width:38px;height:38px;border-radius:8px;background:rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center;color:var(--white);font-size:1.1rem;transition:all .2s;cursor:pointer;text-decoration:none;}
     .social-btn:hover{background:var(--green-light);transform:translateY(-2px);color:white;}
 
-    @media(max-width:768px){.hero-stats{gap:1.5rem;flex-wrap:wrap;}}
+    @media(max-width:768px){
+      .hero-stats{gap:1.5rem;flex-wrap:wrap;}
+      .orders-drawer{max-width:100%;}
+    }
   </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- ═══════════════ NAVBAR ═══════════════ -->
 <nav class="navbar-custom">
   <div class="container">
     <div class="d-flex align-items-center justify-content-between w-100">
-      <a class="navbar-brand-text" href="index.html">Recycle Marketplace</a>
+      <a class="navbar-brand-text" href="index.html">Recycle <span>Marketplace</span></a>
       <div class="d-none d-lg-flex align-items-center gap-1">
         <a class="nav-link-custom active" href="index.html">Beranda</a>
         <a class="nav-link-custom" href="about.html">Tentang Kami</a>
         <a class="nav-link-custom" href="katalog.html">Katalog</a>
         <a class="nav-link-custom" href="berita.html">Berita</a>
         <a class="nav-link-custom" href="kontak.html">Kontak</a>
-        <div class="ms-2"><a class="nav-link-custom btn-nav-login" href="login.html"><i class="bi bi-person me-1"></i>Masuk</a></div>
+        <div class="ms-2 d-flex align-items-center gap-2">
+
+          <!-- ★ TOMBOL PESANAN SAYA ★ -->
+          <button class="order-nav-btn" onclick="openOrders()">
+            <i class="bi bi-receipt"></i>
+            <span>Pesanan Saya</span>
+            <span class="order-nav-badge" id="orderNavBadge">0</span>
+          </button>
+
+          <a class="nav-link-custom btn-nav-login" href="login.html">
+            <i class="bi bi-person me-1"></i>Masuk
+          </a>
+        </div>
       </div>
-      <button class="d-lg-none btn btn-sm" style="color:var(--green-pale);border-color:rgba(255,255,255,.3)" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
-        <i class="bi bi-list fs-5"></i>
-      </button>
+      <div class="d-lg-none d-flex align-items-center gap-2">
+        <!-- Mobile order btn -->
+        <button class="order-nav-btn" onclick="openOrders()" style="padding:.38rem .75rem">
+          <i class="bi bi-receipt"></i>
+          <span class="order-nav-badge" id="orderNavBadgeMobile">0</span>
+        </button>
+        <button class="btn btn-sm" style="color:var(--green-pale);border-color:rgba(255,255,255,.3)" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+          <i class="bi bi-list fs-5"></i>
+        </button>
+      </div>
     </div>
     <div class="collapse d-lg-none" id="mobileMenu">
       <div class="pt-3 pb-2 d-flex flex-column gap-1">
@@ -123,17 +355,71 @@
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ═══════════════ ORDERS OVERLAY ═══════════════ -->
+<div class="orders-overlay" id="ordersOverlay" onclick="closeOrders()"></div>
+
+<!-- ═══════════════ PESANAN SAYA DRAWER ═══════════════ -->
+<div class="orders-drawer" id="ordersDrawer">
+
+  <!-- Header -->
+  <div class="orders-header">
+    <div class="orders-header-left">
+      <h5><i class="bi bi-receipt me-2"></i>Pesanan Saya</h5>
+      <p>Lacak & kelola semua pesananmu</p>
+    </div>
+    <button class="orders-close" onclick="closeOrders()"><i class="bi bi-x"></i></button>
+  </div>
+
+  <!-- Summary Bar -->
+  <div class="orders-summary" id="ordersSummary">
+    <div class="sum-stat">
+      <div class="sum-stat-num" id="sumTotal">0</div>
+      <div class="sum-stat-label">Total Pesanan</div>
+    </div>
+    <div class="sum-stat">
+      <div class="sum-stat-num" id="sumSpend">Rp 0</div>
+      <div class="sum-stat-label">Total Belanja</div>
+    </div>
+    <div class="sum-stat">
+      <div class="sum-stat-num" id="sumDelivered">0</div>
+      <div class="sum-stat-label">Selesai</div>
+    </div>
+    <div class="sum-stat">
+      <div class="sum-stat-num" id="sumProcess">0</div>
+      <div class="sum-stat-label">Diproses</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="orders-tabs" id="ordersTabs">
+    <div class="orders-tab active" data-tab="semua" onclick="switchTab(this)">Semua <span class="tab-count" id="tabCountSemua">0</span></div>
+    <div class="orders-tab" data-tab="pending" onclick="switchTab(this)">Menunggu <span class="tab-count" id="tabCountPending">0</span></div>
+    <div class="orders-tab" data-tab="process" onclick="switchTab(this)">Diproses <span class="tab-count" id="tabCountProcess">0</span></div>
+    <div class="orders-tab" data-tab="shipping" onclick="switchTab(this)">Dikirim <span class="tab-count" id="tabCountShipping">0</span></div>
+    <div class="orders-tab" data-tab="delivered" onclick="switchTab(this)">Selesai <span class="tab-count" id="tabCountDelivered">0</span></div>
+    <div class="orders-tab" data-tab="cancelled" onclick="switchTab(this)">Dibatalkan <span class="tab-count" id="tabCountCancelled">0</span></div>
+  </div>
+
+  <!-- Body -->
+  <div class="orders-body" id="ordersBody">
+    <!-- Rendered by JS -->
+  </div>
+</div>
+
+<!-- ═══════════════ TOAST ═══════════════ -->
+<div class="toast-orders" id="toastOrders"></div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
 <section class="hero-section">
   <div class="container py-5 position-relative">
     <div class="row align-items-center g-5">
       <div class="col-lg-6">
-        <div class="hero-badge"><i class="bi bi-recycle me-1"></i> Platform Jual Beli Produk Daur Ulang </div>
+        <div class="hero-badge"><i class="bi bi-recycle me-1"></i> Platform Jual Beli Produk Daur Ulang</div>
         <h1 class="hero-title">Jual dan Beli Barang <span class="highlight">Daur Ulang</span> Berkualitas</h1>
-        <p class="hero-desc">Ubah sampah jadi cuan. Recycle MarketPlace adalah platform jual beli barang daur ulang yang menghubungkan penjual kreatif dengan pembeli peduli lingkungan Bersama Recycle MarketPlace, setiap transaksi menjadi langkah nyata menuju masa depan yang berkelanjutan.</p>
+        <p class="hero-desc">Ubah sampah jadi cuan. Recycle MarketPlace adalah platform jual beli barang daur ulang yang menghubungkan penjual kreatif dengan pembeli peduli lingkungan. Bersama Recycle MarketPlace, setiap transaksi menjadi langkah nyata menuju masa depan yang berkelanjutan.</p>
         <div class="d-flex flex-wrap gap-3">
-          <a href="katalog.html"><button class="btn-hero-primary"><i class="bi bi-bag me-2"></i>Jelajahi Katalog</button></a>
-          <a href="about.html"><button class="btn-hero-outline">Pelajari Lebih Lanjut <i class="bi bi-arrow-right ms-1"></i></button></a>
+          <a class="btn-hero-primary" href="katalog.html"><i class="bi bi-bag me-1"></i>Jelajahi Katalog</a>
+          <a class="btn-hero-outline" href="about.html">Pelajari Lebih Lanjut <i class="bi bi-arrow-right ms-1"></i></a>
         </div>
         <div class="hero-stats">
           <div><div class="hero-stat-num">200+</div><div class="hero-stat-label">Produk Aktif</div></div>
@@ -177,6 +463,19 @@
   </div>
 </section>
 
+<!-- QUICK ORDER STATUS (jika ada pesanan aktif) -->
+<div id="activeOrderBanner" style="display:none;background:linear-gradient(90deg,var(--green-dark),var(--green-mid));padding:12px 0;">
+  <div class="container d-flex align-items-center justify-content-between flex-wrap gap-2">
+    <div class="d-flex align-items-center gap-2" style="color:white">
+      <i class="bi bi-truck" style="font-size:1.1rem;color:var(--amber)"></i>
+      <span style="font-size:.88rem;font-weight:600" id="activeBannerText">Kamu punya pesanan yang sedang diproses</span>
+    </div>
+    <button onclick="openOrders()" style="background:var(--amber);color:var(--green-dark);border:none;border-radius:50px;padding:.35rem 1rem;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s">
+      Lihat Detail →
+    </button>
+  </div>
+</div>
+
 <!-- KATEGORI -->
 <section class="section-pad" style="background:var(--white)">
   <div class="container">
@@ -186,10 +485,10 @@
       <div class="section-divider"></div>
     </div>
     <div class="d-flex flex-wrap justify-content-center gap-3">
-      <div class="cat-chip active"><span> Kertas</div>
-      <div class="cat-chip"><span> Plastik</div>
-      <div class="cat-chip"><span> Kain</div>
-      <div class="cat-chip"></span> Kaca</div>
+      <div class="cat-chip active">Kertas</div>
+      <div class="cat-chip">Plastik</div>
+      <div class="cat-chip">Kain</div>
+      <div class="cat-chip">Kaca</div>
     </div>
   </div>
 </section>
@@ -206,25 +505,25 @@
       <div class="col-sm-6 col-lg-3">
         <div class="product-card">
           <div class="product-img-wrap" style="background:#e8f5e9"><span class="product-img-icon">🪑</span><span class="badge-eco">Eco</span><span class="badge-new">Terlaris</span></div>
-          <div class="product-body"><div class="product-category">KAIN</div><div class="product-title">Gantungan kunci bunga matahari</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★★</span><span style="font-size:.75rem;color:var(--text-muted)">(8)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 20.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div>
+          <div class="product-body"><div class="product-category">KAIN</div><div class="product-title">Gantungan kunci bunga matahari</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★★</span><span style="font-size:.75rem;color:var(--text-muted)">(8)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 20.000</span><a href="katalog.html" class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</a></div></div>
         </div>
       </div>
       <div class="col-sm-6 col-lg-3">
         <div class="product-card">
           <div class="product-img-wrap" style="background:#fff8e1"><span class="product-img-icon">👜</span><span class="badge-eco">Eco</span></div>
-          <div class="product-body"><div class="product-category">PLASTIK</div><div class="product-title">Tempat pensil karakter</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★☆</span><span style="font-size:.75rem;color:var(--text-muted)">(7)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 15.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div>
+          <div class="product-body"><div class="product-category">PLASTIK</div><div class="product-title">Tempat pensil karakter</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★☆</span><span style="font-size:.75rem;color:var(--text-muted)">(7)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 15.000</span><a href="katalog.html" class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</a></div></div>
         </div>
       </div>
       <div class="col-sm-6 col-lg-3">
         <div class="product-card">
           <div class="product-img-wrap" style="background:#e3f2fd"><span class="product-img-icon">🕯️</span><span class="badge-eco">Eco</span><span class="badge-new">Baru</span></div>
-          <div class="product-body"><div class="product-category">PLASTIK</div><div class="product-title">Lampu hias</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★★</span><span style="font-size:.75rem;color:var(--text-muted)">(15)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 35.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div>
+          <div class="product-body"><div class="product-category">PLASTIK</div><div class="product-title">Lampu hias</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★★</span><span style="font-size:.75rem;color:var(--text-muted)">(15)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 35.000</span><a href="katalog.html" class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</a></div></div>
         </div>
       </div>
       <div class="col-sm-6 col-lg-3">
         <div class="product-card">
           <div class="product-img-wrap" style="background:#f3e5f5"><span class="product-img-icon">🌿</span><span class="badge-eco">Eco</span></div>
-          <div class="product-body"><div class="product-category">KAIN</div><div class="product-title">Gantungan kunci handmade</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★☆</span><span style="font-size:.75rem;color:var(--text-muted)">(4)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 20.000</span><button class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</button></div></div>
+          <div class="product-body"><div class="product-category">KAIN</div><div class="product-title">Gantungan kunci handmade</div><div class="d-flex align-items-center gap-1 mb-3"><span style="color:#f59e0b;font-size:.8rem">★★★★☆</span><span style="font-size:.75rem;color:var(--text-muted)">(4)</span></div><div class="d-flex align-items-center justify-content-between"><span class="product-price">Rp 20.000</span><a href="katalog.html" class="btn-add-cart"><i class="bi bi-bag-plus me-1"></i>Beli</a></div></div>
         </div>
       </div>
     </div>
@@ -239,7 +538,7 @@
   <div class="container text-center">
     <h2 style="font-size:2.2rem;color:var(--white);margin-bottom:1rem">Punya Barang Bekas Berkualitas?</h2>
     <p style="color:rgba(255,255,255,.75);font-size:1rem;max-width:540px;margin:0 auto 2rem">Bergabunglah sebagai penjual di Recycle Marketplace dan ubah barang bekas kamu menjadi penghasilan nyata.</p>
-    <a href="login.html"><button class="btn-hero-primary"><i class="bi bi-shop me-2"></i>Mulai Berjualan</button></a>
+    <a href="login.html" class="btn-hero-primary"><i class="bi bi-shop me-2"></i>Mulai Berjualan</a>
   </div>
 </section>
 
@@ -282,7 +581,7 @@
   <div class="container">
     <div class="row g-4">
       <div class="col-lg-4">
-        <div class="footer-brand mb-3">Recycle</span> Marketplace</div>
+        <div class="footer-brand mb-3">Recycle <span>Marketplace</span></div>
         <p style="font-size:.88rem;line-height:1.7;max-width:280px">Platform jual beli barang daur ulang terpercaya. Bersama kami, jadikan bumi lebih hijau satu transaksi dalam satu waktu.</p>
         <div class="d-flex gap-2 mt-3">
           <a class="social-btn" href="#"><i class="bi bi-instagram"></i></a>
@@ -332,12 +631,382 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  document.querySelectorAll('.cat-chip').forEach(chip => {
-    chip.addEventListener('click', function() {
-      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-      this.classList.add('active');
-    });
+// ══════════════════════════════════════════════════════
+//  PESANAN SAYA — SISTEM LENGKAP
+// ══════════════════════════════════════════════════════
+
+// Storage key (harus sama dengan yang ada di katalog.html jika ingin share)
+const ORDERS_KEY = 'rcm_orders';
+
+// Status config
+const STATUS_CONFIG = {
+  pending:   { label:'Menunggu Pembayaran', cls:'status-pending',   icon:'bi-clock',       tab:'pending'   },
+  process:   { label:'Sedang Diproses',     cls:'status-process',   icon:'bi-gear',        tab:'process'   },
+  shipping:  { label:'Dalam Pengiriman',    cls:'status-shipping',  icon:'bi-truck',       tab:'shipping'  },
+  delivered: { label:'Pesanan Selesai',     cls:'status-delivered', icon:'bi-check-circle',tab:'delivered' },
+  cancelled: { label:'Dibatalkan',          cls:'status-cancelled', icon:'bi-x-circle',    tab:'cancelled' },
+};
+
+// Tracking steps per status
+const TRACKING_STEPS = {
+  pending:  ['Pesanan dibuat','Menunggu pembayaran','','',''],
+  process:  ['Pesanan dibuat','Pembayaran diterima','Sedang dikemas','',''],
+  shipping: ['Pesanan dibuat','Pembayaran diterima','Dikemas','Dalam pengiriman',''],
+  delivered:['Pesanan dibuat','Pembayaran diterima','Dikemas','Dikirim','Diterima'],
+  cancelled:['Pesanan dibuat','Dibatalkan','','',''],
+};
+
+// ── Seed demo orders jika localStorage kosong ──────────
+function seedDemoOrders() {
+  const existing = loadOrders();
+  if (existing.length > 0) return; // sudah ada data nyata
+  const demo = [
+    {
+      id:'RCM-38291', date:'2 Mei 2026', status:'shipping',
+      payment:'Transfer Bank', address:'Jl. Merdeka No.5, Purwokerto',
+      items:[
+        {name:'Gantungan kunci bunga matahari',emoji:'🌸',cat:'Kain',price:20000,qty:2},
+        {name:'Tempat pensil karakter',emoji:'✏️',cat:'Plastik',price:15000,qty:1},
+      ]
+    },
+    {
+      id:'RCM-27164', date:'28 Apr 2026', status:'delivered',
+      payment:'COD', address:'Jl. Sudirman No.12, Purwokerto',
+      items:[
+        {name:'Lampu hias',emoji:'💡',cat:'Plastik',price:35000,qty:1},
+      ]
+    },
+    {
+      id:'RCM-19053', date:'20 Apr 2026', status:'process',
+      payment:'E-Wallet', address:'Jl. Gatot Subroto No.88, Purwokerto',
+      items:[
+        {name:'Gantungan kunci handmade',emoji:'🌿',cat:'Kain',price:20000,qty:3},
+        {name:'Lampu hias',emoji:'💡',cat:'Plastik',price:35000,qty:1},
+      ]
+    },
+  ];
+  saveOrders(demo);
+}
+
+function loadOrders() {
+  try { return JSON.parse(localStorage.getItem(ORDERS_KEY)) || []; }
+  catch { return []; }
+}
+function saveOrders(orders) {
+  localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+}
+
+// ── Format rupiah ──────────────────────────────────────
+function rp(n) { return 'Rp ' + Number(n).toLocaleString('id-ID'); }
+
+// ── Order total ────────────────────────────────────────
+function orderTotal(order) {
+  return order.items.reduce((s,i) => s + i.price * i.qty, 0);
+}
+
+// ── Active tab ────────────────────────────────────────
+let currentTab = 'semua';
+let openTrackings = {}; // id → bool
+
+// ── Switch tab ─────────────────────────────────────────
+function switchTab(el) {
+  document.querySelectorAll('.orders-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  currentTab = el.dataset.tab;
+  renderOrders();
+}
+
+// ── Open / Close Drawer ───────────────────────────────
+function openOrders() {
+  renderOrders();
+  document.getElementById('ordersDrawer').classList.add('open');
+  document.getElementById('ordersOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeOrders() {
+  document.getElementById('ordersDrawer').classList.remove('open');
+  document.getElementById('ordersOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── Render all orders ─────────────────────────────────
+function renderOrders() {
+  const orders = loadOrders();
+  const filtered = currentTab === 'semua'
+    ? orders
+    : orders.filter(o => o.status === currentTab);
+
+  // Update tab counts
+  const counts = {};
+  ['pending','process','shipping','delivered','cancelled'].forEach(s => {
+    counts[s] = orders.filter(o => o.status === s).length;
   });
+  document.getElementById('tabCountSemua').textContent      = orders.length;
+  document.getElementById('tabCountPending').textContent    = counts.pending || 0;
+  document.getElementById('tabCountProcess').textContent    = counts.process || 0;
+  document.getElementById('tabCountShipping').textContent   = counts.shipping || 0;
+  document.getElementById('tabCountDelivered').textContent  = counts.delivered || 0;
+  document.getElementById('tabCountCancelled').textContent  = counts.cancelled || 0;
+
+  // Summary bar
+  const totalSpend = orders.reduce((s,o) => s + orderTotal(o), 0);
+  document.getElementById('sumTotal').textContent     = orders.length;
+  document.getElementById('sumSpend').textContent     = rp(totalSpend);
+  document.getElementById('sumDelivered').textContent = counts.delivered || 0;
+  document.getElementById('sumProcess').textContent   = (counts.process || 0) + (counts.shipping || 0);
+
+  // Nav badge (only active orders)
+  const activeCount = orders.filter(o => ['pending','process','shipping'].includes(o.status)).length;
+  ['orderNavBadge','orderNavBadgeMobile'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = activeCount;
+    el.classList.toggle('visible', activeCount > 0);
+  });
+
+  // Active order banner
+  const banner = document.getElementById('activeOrderBanner');
+  if (activeCount > 0) {
+    banner.style.display = 'block';
+    document.getElementById('activeBannerText').textContent =
+      `Kamu punya ${activeCount} pesanan yang sedang diproses`;
+  } else {
+    banner.style.display = 'none';
+  }
+
+  const body = document.getElementById('ordersBody');
+
+  if (filtered.length === 0) {
+    body.innerHTML = `
+      <div class="orders-empty">
+        <div class="orders-empty-icon">📦</div>
+        <h6>Belum ada pesanan</h6>
+        <p>${currentTab === 'semua'
+          ? 'Yuk mulai belanja produk daur ulang favoritmu!'
+          : `Tidak ada pesanan dengan status "${STATUS_CONFIG[currentTab]?.label || currentTab}"`}
+        </p>
+        <button class="btn-shop-now" onclick="closeOrders();window.location.href='katalog.html'">
+          <i class="bi bi-bag me-2"></i>Belanja Sekarang
+        </button>
+      </div>`;
+    return;
+  }
+
+  body.innerHTML = filtered.map(order => buildOrderCard(order)).join('');
+}
+
+// ── Build single order card HTML ──────────────────────
+function buildOrderCard(order) {
+  const cfg   = STATUS_CONFIG[order.status];
+  const total = orderTotal(order);
+  const MAX_VISIBLE = 2;
+  const visibleItems = order.items.slice(0, MAX_VISIBLE);
+  const hiddenCount  = order.items.length - MAX_VISIBLE;
+
+  const itemsHTML = visibleItems.map(item => `
+    <div class="order-item-row">
+      <div class="order-item-emoji">${item.emoji}</div>
+      <div style="flex:1;min-width:0">
+        <div class="order-item-name">${item.name}</div>
+        <div class="order-item-qty">${item.cat} · ×${item.qty}</div>
+      </div>
+      <div class="order-item-price">${rp(item.price * item.qty)}</div>
+    </div>
+  `).join('');
+
+  const moreHTML = hiddenCount > 0
+    ? `<div class="more-items-pill" onclick="toggleMoreItems('more-${order.id}',this)">
+         <i class="bi bi-plus-circle"></i>+${hiddenCount} produk lainnya
+       </div>
+       <div id="more-${order.id}" style="display:none;margin-top:.5rem">
+         ${order.items.slice(MAX_VISIBLE).map(item => `
+           <div class="order-item-row" style="margin-bottom:.5rem">
+             <div class="order-item-emoji">${item.emoji}</div>
+             <div style="flex:1;min-width:0">
+               <div class="order-item-name">${item.name}</div>
+               <div class="order-item-qty">${item.cat} · ×${item.qty}</div>
+             </div>
+             <div class="order-item-price">${rp(item.price * item.qty)}</div>
+           </div>`).join('')}
+       </div>`
+    : '';
+
+  // Action buttons based on status
+  let actions = '';
+  if (order.status === 'pending') {
+    actions = `
+      <button class="btn-order-action btn-track" onclick="toggleTracking('${order.id}')">
+        <i class="bi bi-map"></i>Lacak
+      </button>
+      <button class="btn-order-action btn-cancel" onclick="cancelOrder('${order.id}')">
+        <i class="bi bi-x"></i>Batalkan
+      </button>`;
+  } else if (order.status === 'process') {
+    actions = `
+      <button class="btn-order-action btn-track" onclick="toggleTracking('${order.id}')">
+        <i class="bi bi-map"></i>Lacak
+      </button>`;
+  } else if (order.status === 'shipping') {
+    actions = `
+      <button class="btn-order-action btn-track" onclick="toggleTracking('${order.id}')">
+        <i class="bi bi-map"></i>Lacak Pengiriman
+      </button>
+      <button class="btn-order-action btn-reorder" onclick="confirmReceived('${order.id}')">
+        <i class="bi bi-check2"></i>Terima Pesanan
+      </button>`;
+  } else if (order.status === 'delivered') {
+    actions = `
+      <button class="btn-order-action btn-reorder" onclick="reorder('${order.id}')">
+        <i class="bi bi-arrow-repeat"></i>Beli Lagi
+      </button>
+      <button class="btn-order-action btn-review" onclick="showToast('⭐ Fitur ulasan segera hadir!')">
+        <i class="bi bi-star"></i>Beri Ulasan
+      </button>`;
+  } else if (order.status === 'cancelled') {
+    actions = `
+      <button class="btn-order-action btn-reorder" onclick="reorder('${order.id}')">
+        <i class="bi bi-arrow-repeat"></i>Pesan Lagi
+      </button>`;
+  }
+
+  // Tracking panel
+  const steps = TRACKING_STEPS[order.status] || [];
+  const activeStep = steps.filter(s => s !== '').length - 1;
+  const trackHTML = steps.filter(s => s !== '').map((step, i) => {
+    const isDone    = i < activeStep;
+    const isCurrent = i === activeStep;
+    const dotClass  = isDone ? 'done' : isCurrent ? 'current' : 'pending';
+    const dotIcon   = isDone ? '✓' : isCurrent ? '●' : '○';
+    return `
+      <div class="track-step">
+        <div class="track-dot ${dotClass}">${dotIcon}</div>
+        <div class="track-info">
+          <h6>${step}</h6>
+          <p>${isDone ? 'Selesai' : isCurrent ? 'Sedang berlangsung' : 'Menunggu'}</p>
+        </div>
+      </div>`;
+  }).join('');
+
+  const isTrackOpen = openTrackings[order.id] ? 'open' : '';
+
+  return `
+    <div class="order-card" id="card-${order.id}">
+      <div class="order-card-header">
+        <div>
+          <div class="order-id"><i class="bi bi-hash"></i>${order.id}</div>
+          <div class="order-date"><i class="bi bi-calendar3 me-1"></i>${order.date}</div>
+        </div>
+        <span class="status-badge ${cfg.cls}">
+          <i class="bi ${cfg.icon} me-1"></i>${cfg.label}
+        </span>
+      </div>
+
+      <div class="order-items">
+        ${itemsHTML}
+        ${moreHTML}
+      </div>
+
+      <div class="order-card-footer">
+        <div>
+          <div class="order-total-label">Total Pembayaran</div>
+          <div class="order-total-val">${rp(total)}</div>
+          <div style="font-size:.7rem;color:var(--text-muted);margin-top:.15rem">
+            <i class="bi bi-credit-card me-1"></i>${order.payment || 'Transfer Bank'}
+          </div>
+        </div>
+        <div class="order-actions">${actions}</div>
+      </div>
+
+      <!-- Tracking panel -->
+      <div class="tracking-panel ${isTrackOpen}" id="track-${order.id}">
+        <div class="tracking-inner">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-mid);margin-bottom:.8rem">
+            <i class="bi bi-geo-alt me-1"></i>Status Pengiriman
+          </div>
+          ${trackHTML}
+          ${order.address ? `
+            <div style="margin-top:.8rem;padding:.7rem;background:#f0fdf4;border-radius:8px;font-size:.75rem;color:var(--green-dark)">
+              <i class="bi bi-house me-1"></i><strong>Alamat:</strong> ${order.address}
+            </div>` : ''}
+        </div>
+      </div>
+    </div>`;
+}
+
+// ── Toggle more items ──────────────────────────────────
+function toggleMoreItems(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.style.display !== 'none';
+  el.style.display = isOpen ? 'none' : 'block';
+  const hidden = btn.querySelector('i');
+  const count  = btn.textContent.match(/\d+/)?.[0];
+  btn.innerHTML = isOpen
+    ? `<i class="bi bi-plus-circle"></i>+${count} produk lainnya`
+    : `<i class="bi bi-dash-circle"></i>Sembunyikan`;
+}
+
+// ── Toggle tracking panel ──────────────────────────────
+function toggleTracking(id) {
+  openTrackings[id] = !openTrackings[id];
+  const panel = document.getElementById(`track-${id}`);
+  if (panel) panel.classList.toggle('open', openTrackings[id]);
+}
+
+// ── Cancel order ───────────────────────────────────────
+function cancelOrder(id) {
+  if (!confirm('Batalkan pesanan #' + id + '?')) return;
+  const orders = loadOrders();
+  const o = orders.find(x => x.id === id);
+  if (o) { o.status = 'cancelled'; saveOrders(orders); renderOrders(); }
+  showToast('❌ Pesanan #' + id + ' dibatalkan');
+}
+
+// ── Confirm received ───────────────────────────────────
+function confirmReceived(id) {
+  const orders = loadOrders();
+  const o = orders.find(x => x.id === id);
+  if (o) { o.status = 'delivered'; saveOrders(orders); renderOrders(); }
+  showToast('✅ Pesanan diterima! Terima kasih sudah berbelanja 🌿');
+}
+
+// ── Reorder ────────────────────────────────────────────
+function reorder(id) {
+  showToast('🛍️ Mengarahkan ke katalog...');
+  setTimeout(() => { window.location.href = 'katalog.html'; }, 1200);
+}
+
+// ── Toast ──────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toastOrders');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── ESC key ────────────────────────────────────────────
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOrders(); });
+
+// ── Category chip filter ───────────────────────────────
+document.querySelectorAll('.cat-chip').forEach(chip => {
+  chip.addEventListener('click', function() {
+    document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ── INIT ───────────────────────────────────────────────
+seedDemoOrders();
+renderOrders(); // init badge + banner tanpa buka drawer
+
+// Sync dengan pesanan baru dari katalog.html via localStorage event
+window.addEventListener('storage', e => {
+  if (e.key === ORDERS_KEY) {
+    renderOrders();
+  }
+});
 </script>
 </body>
 </html>
